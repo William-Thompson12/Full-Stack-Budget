@@ -16,21 +16,23 @@ class LoginContainer extends React.Component{
         return (
             <div className="login-Container">
                 <h3>Login Below</h3>
-                <Form>
-                    <Form.Group controlId="formGroupMain">
+                <Form controlid="loginForm">
+                    <Form.Group>
                     <Row>
                         <Col>
-                            <Form.Label>Username</Form.Label>
-                            <Form.Control type="text" placeholder="Enter Username" />
+                            <Form.Label>Email Address</Form.Label>
+                            <Form.Control id="loginEmail" autoComplete="off" type="email" placeholder="Enter email" />
                         </Col>
                         <Col>
                             <Form.Label>Password</Form.Label>
-                            <Form.Control type="password" placeholder="Password" />
+                            <Form.Control autoComplete="off" id="loginPassword" type="password" placeholder="Password" />
                         </Col>
                     </Row>
                     </Form.Group>
+                    <Button className="btn-dark" onClick={() => this.props.handleClick()}>Submit</Button>
+                    <div id="errorMessage"></div>
+                    <Link to="/signup">Don't Have an Account Signup Here</Link>
                 </Form>
-                <Link to="/signup">Don't Have an Account Signup Here</Link>
             </div>
         )
     }

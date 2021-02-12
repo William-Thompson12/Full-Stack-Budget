@@ -1,8 +1,8 @@
 import React from 'react';
 import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form'
-import Col from 'react-bootstrap/Col'
-import Row from 'react-bootstrap/Row'
+import Form from 'react-bootstrap/Form';
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
 import { Link } from 'react-router-dom';
 
 class SignupContainer extends React.Component{
@@ -17,34 +17,32 @@ class SignupContainer extends React.Component{
             <div className="login-Container">
                 <h3>Signup Below</h3>
                 <Form>
-                    <Form.Group controlId="formGroupMain">
+                    <Form.Group>
                     <Row>
                         <Col>
                             <Form.Label>Email Address</Form.Label>
-                            <Form.Control type="email" placeholder="Enter email" />
+                            <Form.Control id="email" autoComplete="on" type="email" placeholder="Enter email" />
                         </Col>
                         <Col>
                             <Form.Label>Password</Form.Label>
-                            <Form.Control type="password" placeholder="Password" />
+                            <Form.Control id="password" autoComplete="on" type="password" placeholder="Password" />
                         </Col>
                     </Row>
                     </Form.Group>
-                    <Form.Group controlId="formGroupNames">
+                    <Form.Group>
                     <Row>
                         <Col>
                             <Form.Label>First Name</Form.Label>
-                            <Form.Control type="text" placeholder="First Name" />
+                            <Form.Control id="first-name" autoComplete="on" type="text" placeholder="First Name" />
                         </Col>
                         <Col>
                             <Form.Label>Last Name</Form.Label>
-                            <Form.Control type="text" placeholder="Last Name" />
+                            <Form.Control id="last-name" autoComplete="on" type="text" placeholder="Last Name" />
                         </Col>
                     </Row>
                     </Form.Group>
-                    <Form.Group controlId="formGroupUsername">
-                        <Form.Label>Username</Form.Label>
-                        <Form.Control type="text" placeholder="Enter Username" />
-                    </Form.Group>
+                    <Button className="btn-dark" onClick={() => this.props.handleClick()}>Submit</Button>
+                    <div id="errorMessage"></div>
                 </Form>
             </div>
         )
