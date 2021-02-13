@@ -1,11 +1,14 @@
 import React from 'react';
 import firebase from "../firebase";
+import { connect } from 'react-redux';
 // CSS
 import '../views/signup.css';
 // Components
 import Header from '../components/header';
 import Footer from '../components/footer';
 import SignupContainer from '../components/signupContainer';
+// Actions
+import { logIn } from '../redux/actions';
 
 const SignUp = (props) => {
 
@@ -20,7 +23,12 @@ const SignUp = (props) => {
         .createUserWithEmailAndPassword(emailValue, passwordValue)
         .then(function(){
             console.log('account made')
-            //signin
+            .signInWithEmailAndPassword(emailValue, passwordValue)
+            .then(function(){
+                //LogIn
+                this.props.logInClick();
+                console.log(this.props.loggedIn);
+            })
         })
         .catch(function(error) {
             errorMessageBox.innerHTML = error.message;
@@ -37,5 +45,16 @@ const SignUp = (props) => {
         </div>
     );
 }
+function mapStateToProps(state) {
+    return {
+        loggedIn: state.loggedIn
+    }
+}
+function mapDispatchToProps(dispatch) {
+    return {
+        // Translate redux dispatch into props
+        logInClick: () => { dispatch(logIn()) }
+    }
+}
 
-export default SignUp 
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp);
