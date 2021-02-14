@@ -1,6 +1,7 @@
 import React from 'react';
-import Button from 'react-bootstrap/Button';
-import { Link } from 'react-router-dom';
+// Bootstrap 
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
 
 class Footer extends React.Component{
     constructor(props){
@@ -11,15 +12,17 @@ class Footer extends React.Component{
 
     render(){
         return (
-            <nav className="footer text-center bg-dark">
-                <div className="copyRight">
-                    <p>&copy; Bugdet Tool</p>
-                </div>
-                <div className="footer-links">
-                    <a className="nav-link active" href="https://github.com/William-Thompson12/React-Project">GitHub</a>
-                    <a className="nav-link active" href="https://linkedin.com/in/william-thompson12">Linkedin</a>
-                </div>
-            </nav>
+            <Row className="footer text-center">
+                <Col sm={12} md={12} lg={12}>
+                    <div className="copyRight">
+                        <p>&copy; Bugdet Tool</p>
+                    </div>
+                </Col>
+                <Col sm={12} md={12} lg={12}>
+                    <a href="https://github.com/William-Thompson12/Full-Stack-Bugdet">GitHub</a>-
+                    <a href="www.linkedin.com/in/william-thompson12">Linkedin</a>
+                </Col>
+            </Row>
         )
     }
 }

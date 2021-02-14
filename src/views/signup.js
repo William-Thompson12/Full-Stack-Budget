@@ -9,6 +9,8 @@ import Footer from '../components/footer';
 import SignupContainer from '../components/signupContainer';
 // Actions
 import { logIn } from '../redux/actions';
+// Bootstrap 
+import Col from 'react-bootstrap/Col';
 
 const SignUp = (props) => {
 
@@ -39,7 +41,9 @@ const SignUp = (props) => {
         <div className="page">
             <Header/>
             <div className="main">
-                <SignupContainer handleClick={_signUp}/>
+                <Col sm={{ span: 4, offset: 4 }} md={{ span: 4, offset: 4 }} lg={{ span: 4, offset: 4 }}>
+                    <SignupContainer handleClick={_signUp}/>
+                </Col>
             </div>
             <Footer/>
         </div>

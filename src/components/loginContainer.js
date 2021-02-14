@@ -1,9 +1,12 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+import './loginContainer.css'
+// Bootstrap
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form'
 import Col from 'react-bootstrap/Col'
 import Row from 'react-bootstrap/Row'
-import { Link } from 'react-router-dom';
+
 
 class LoginContainer extends React.Component{
     constructor(props){
@@ -15,24 +18,40 @@ class LoginContainer extends React.Component{
     render(){
         return (
             <div className="login-Container">
-                <h3>Login Below</h3>
-                <Form controlid="loginForm">
-                    <Form.Group>
-                    <Row>
-                        <Col>
-                            <Form.Label>Email Address</Form.Label>
-                            <Form.Control id="loginEmail" autoComplete="off" type="email" placeholder="Enter email" />
-                        </Col>
-                        <Col>
-                            <Form.Label>Password</Form.Label>
-                            <Form.Control autoComplete="off" id="loginPassword" type="password" placeholder="Password" />
-                        </Col>
-                    </Row>
-                    </Form.Group>
-                    <Button className="btn-dark" onClick={() => this.props.handleClick()}>Submit</Button>
-                    <div id="errorMessage"></div>
-                    <Link to="/signup">Don't Have an Account Signup Here</Link>
-                </Form>
+                <div className="form-block">
+                    <div className="mb-4">
+                        <h3>Sign In to <strong>Budget Tool</strong></h3>
+                        <p className="mb-4">Lorem ipsum dolor sit amet elit. Sapiente sit aut eos consectetur adipisicing.</p>
+                    </div>
+                    <Form controlid="loginForm">
+                        <Form.Group>
+                        <Row>
+                            <Col>
+                                <Form.Label>Email</Form.Label>
+                                <Form.Control id="loginEmail" autoComplete="off" type="email" placeholder="Enter email" />
+                            </Col>
+                            <Col>
+                                <Form.Label>Password</Form.Label>
+                                <Form.Control autoComplete="off" id="loginPassword" type="password" placeholder="Password" />
+                            </Col>
+                        </Row>
+                        </Form.Group>
+                        <Form.Group>
+                            <Row>
+                                <Col sm={{ span: 8, offset: 4 }} md={{ span: 8, offset: 4 }} lg={{ span: 8, offset: 4 }}>
+                                    <div id="errorMessage"></div>
+                                    <Link to="/signup">Don't Have an Account Signup Here</Link>
+                                </Col>
+                            </Row>
+                            <Button className="btn-dark" onClick={() => this.props.handleClick()}>Submit</Button>
+                            <span className="d-block text-center my-4 text-muted"> or sign in with</span>
+                            <div className="social-login text-center">'
+                                {/* Add Google Login Through FireBase */}
+                                <Button className="btn-dark" onClick={null}><span className="icon-google"></span></Button>
+                            </div>
+                        </Form.Group>
+                    </Form>
+                </div>
             </div>
         )
     }

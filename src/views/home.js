@@ -7,8 +7,12 @@ import '../views/home.css';
 import Header from '../components/header';
 import Footer from '../components/footer';
 import LoginContainer from '../components/loginContainer';
+import Article from '../components/articleContainer'
 // Actions
 import { logIn } from '../redux/actions';
+// Bootstrap 
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
 
 const HomePage = (props) => {
 
@@ -34,7 +38,14 @@ const HomePage = (props) => {
         <div className="page">
             <Header/>
             <div className="main">
-                <LoginContainer handleClick={_loginIn}/>
+            <Row>
+                <Col sm={{ span: 11, offset: 1 }} md={{ span: 3, offset: 1 }} lg={{ span: 3, offset: 1 }}>
+                    <Article />
+                </Col>
+                <Col sm={12} md={4} lg={4}>
+                    <LoginContainer handleClick={_loginIn}/>
+                </Col>
+            </Row>
             </div>
             <Footer/>
         </div>
