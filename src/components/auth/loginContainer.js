@@ -38,9 +38,9 @@ class LoginContainer extends React.Component{
                         </Form.Group>
                         <Form.Group>
                             <Row>
-                                <Col sm={{ span: 8, offset: 4 }} md={{ span: 8, offset: 4 }} lg={{ span: 8, offset: 4 }}>
+                                <Col sm={{ span: 4, offset: 4 }} md={{ span: 4, offset: 4 }} lg={{ span: 4, offset: 4 }}>
                                     <div id="errorMessage"></div>
-                                    <Link to="/signup">Don't Have an Account Signup Here</Link>
+                                    <Link to="/signup">No Account? Signup Here</Link>
                                 </Col>
                             </Row>
                             <Button className="btn-dark" onClick={() => this.props.handleClick()}>Submit</Button>

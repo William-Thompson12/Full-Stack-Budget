@@ -4,7 +4,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import './header.css'
 // Bootstrap
 import NavDropdown from 'react-bootstrap/NavDropdown'
-import Profile from './profileContainer';
+import Profile from '../profileContainer';
 import { Link } from 'react-router-dom';
 
 class Header extends React.Component{

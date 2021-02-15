@@ -4,10 +4,10 @@ import { connect } from 'react-redux';
 // CSS
 import '../views/home.css';
 // Components
-import Header from '../components/header';
-import Footer from '../components/footer';
-import LoginContainer from '../components/loginContainer';
-import Article from '../components/articleContainer'
+import Header from '../components/header-components/header';
+import Footer from '../components/footer-components/footer';
+import LoginContainer from '../components/auth/loginContainer';
+import Article from '../components/articleContainer';
 // Actions
 import { logIn } from '../redux/actions';
 // Bootstrap 
@@ -38,14 +38,14 @@ const HomePage = (props) => {
         <div className="page">
             <Header/>
             <div className="main">
-            <Row>
-                <Col sm={{ span: 11, offset: 1 }} md={{ span: 3, offset: 1 }} lg={{ span: 3, offset: 1 }}>
-                    <Article />
-                </Col>
-                <Col sm={12} md={4} lg={4}>
-                    <LoginContainer handleClick={_loginIn}/>
-                </Col>
-            </Row>
+                <Row>
+                    <Col sm={{ span: 11, offset: 1 }} md={{ span: 3, offset: 1 }} lg={{ span: 3, offset: 1 }}>
+                        <Article />
+                    </Col>
+                    <Col sm={12} md={4} lg={4}>
+                        <LoginContainer handleClick={_loginIn}/>
+                    </Col>
+                </Row>
             </div>
             <Footer/>
         </div>

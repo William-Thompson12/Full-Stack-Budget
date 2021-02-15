@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 // CSS
 import '../views/signup.css';
 // Components
-import Header from '../components/header';
-import Footer from '../components/footer';
-import SignupContainer from '../components/signupContainer';
+import Header from '../components/header-components/header';
+import Footer from '../components/footer-components/footer';
+import SignupContainer from '../components/auth/signupContainer';
 // Actions
 import { logIn } from '../redux/actions';
 // Bootstrap 
