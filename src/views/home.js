@@ -24,13 +24,16 @@ const HomePage = (props) => {
         .auth()
         .signInWithEmailAndPassword(emailValue, passwordValue)
         .then(function(){
-        //LogIn
-        this.props.logInClick();
-        console.log(this.props.loggedIn);
+            //LogIn
+            props.logInClick();
+            console.log(props.loggedIn);
+        })
+        .then(function(){
+
         })
         .catch(function(error) {
-        errorMessageBox.innerHTML = error.message;
-        console.log(error.message);
+            errorMessageBox.innerHTML = error.message;
+            console.log(error.message);
         });
     }
 
@@ -39,10 +42,10 @@ const HomePage = (props) => {
             <Header/>
             <div className="main">
                 <Row>
-                    <Col sm={{ span: 11, offset: 1 }} md={{ span: 3, offset: 1 }} lg={{ span: 3, offset: 1 }}>
+                    <Col sm={{ span: 11, offset: 1 }} md={{ span: 11, offset: 1 }} lg={{ span: 3, offset: 1 }}>
                         <Article />
                     </Col>
-                    <Col sm={12} md={4} lg={4}>
+                    <Col sm={12} md={12} lg={4}>
                         <LoginContainer handleClick={_loginIn}/>
                     </Col>
                 </Row>

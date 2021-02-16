@@ -41,7 +41,7 @@ const SignUp = (props) => {
         <div className="page">
             <Header/>
             <div className="main">
-                <Col sm={{ span: 4, offset: 4 }} md={{ span: 4, offset: 4 }} lg={{ span: 4, offset: 4 }}>
+                <Col sm={{ span: 8, offset: 2 }} md={{ span: 6, offset: 3 }} lg={{ span: 4, offset: 4 }}>
                     <SignupContainer handleClick={_signUp}/>
                 </Col>
             </div>

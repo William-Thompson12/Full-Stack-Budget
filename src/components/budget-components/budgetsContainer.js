@@ -19,32 +19,34 @@ const BudgetsContainer = (props) => {
                 <Tooltip id={`tooltip-right`}>
                    Click and Drag
                 </Tooltip>}>
-                <Row className="rendered-budgets">
-                    <Col sm={{ span: 12, offset: 0 }} md={{ span: 10, offset: 1 }} lg={{ span: 10, offset: 1 }}>
+                <div className="rendered-budgets">
+                    <Col sm={{ span: 12, offset: 0 }} md={{ span: 12, offset: 0 }} lg={{ span: 12, offset: 0 }}>
                         <Card>
                             <Card.Body>
-                                <Card.Title className="budget-title">Budget Title</Card.Title>
+                                <Card.Text className="budget-title"><strong>Budget Title</strong></Card.Text>
                                 <hr></hr>
                                 <Card.Text className="budget-description">Short Description of the Budget The User Gave...</Card.Text>
-                                <Card.Text className="budget-date">Last Updated:"budget.lastUpdated"</Card.Text>
+                                <p className="budget-date">Last Edit: 00/00/00</p>
                             </Card.Body>
                         </Card>
                     </Col>
-                </Row>
+                </div>
             </OverlayTrigger>
         )
     })
 
     const renderHandler = () => {
-        return renderedBudgets.length > 1 ? renderedBudgets : defaultRender()
+        return renderedBudgets.length > 4 ? renderedBudgets : defaultRender()
     }
     const defaultRender = () => {
         return (
             <Row className="rendered-budgets">
                 <Col sm={{ span: 12, offset: 0 }} md={{ span: 12, offset: 0 }} lg={{ span: 12, offset: 0 }}>
-                    <h4>Make A New Budget</h4>
-                    {/* Replace with new budget function */}
-                    <Button onClick={null}>+</Button>
+                    <div className="height">
+                        <h4>Make A New Budget</h4>
+                        {/* Replace with new budget function */}
+                        <Button onClick={null}>+</Button>
+                    </div>
                 </Col>
             </Row>
         )

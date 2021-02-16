@@ -3,7 +3,12 @@ import thunk from 'redux-thunk';
 import { rootReducer } from './reducers';
 
 export const defaultState = {
-    loggedIn: false
+    loggedIn: false,
+    user: {
+      name: " ",
+      email: " "
+    },
+    budgets: []
 }
 
 const store = createStore(

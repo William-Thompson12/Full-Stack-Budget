@@ -12,10 +12,10 @@ const ActionContainer = (props) => {
     return (
         <div className="action-container">
             <Row>
-                <Col xs={12} md={2} lg={2}>
+                <Col sm={12} md={3} lg={3}>
                     <BudgetsFolder/>
                 </Col>
-                <Col xs={12} md={9} lg={9}>
+                <Col sm={{ span: 12, offset: 0 }} md={{ span: 9, offset: 0 }} lg={{ span: 9, offset: 0 }}>
                     <BudgetBuilder/>
                 </Col>
             </Row>
