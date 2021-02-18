@@ -8,13 +8,15 @@ import ActionContainer from '../components/budget-components/actionContainer';
 
 const MainHub = (props) => {
     return (
-        <div className="page">
-            <Header profile={true}/>
-            <div className="main">
-                <ActionContainer/>
+        <>
+            <div className="page">
+                <Header profile={true}/>
+                <div className="main">
+                    <ActionContainer/>
+                </div>
             </div>
             <Footer/>
-        </div>
+        </>
     );
 }
 

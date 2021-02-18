@@ -23,10 +23,10 @@ const HomePage = (props) => {
         firebase
         .auth()
         .signInWithEmailAndPassword(emailValue, passwordValue)
-        .then(function(){
+        .then(function(response){
             //LogIn
             props.logInClick();
-            console.log(props.loggedIn);
+            console.log(response);
         })
         .then(function(){
 
