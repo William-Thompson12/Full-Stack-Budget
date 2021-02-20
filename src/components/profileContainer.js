@@ -13,7 +13,7 @@ class Profile extends React.Component{
         return (
             <>
             {/* change title to Users Name */}
-            <NavDropdown title={null} id="collasible-nav-dropdown">
+            <NavDropdown title={'user'} id="collasible-nav-dropdown">
                 <Link to="/about">About</Link>
                 {/* change onClick to Profile Pop-Up */}
                 <NavDropdown.Item onClick={null}>Profile</NavDropdown.Item>
