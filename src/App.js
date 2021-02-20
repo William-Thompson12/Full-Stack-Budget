@@ -7,7 +7,6 @@ import SignupPage from './views/signup';
 import MainHub from './views/mainhub';
 import About from './views/about';
 
-// components
 function App() {
   return (
     <Router>

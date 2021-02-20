@@ -1,0 +1,11 @@
+.page {
+    width: 100vw;
+    height: 100vh;
+}
+.main {
+    width: 100vw;
+    height: 75%;
+}
+.article-container {
+    text-align: right;
+}
