@@ -1,6 +1,5 @@
 import React from 'react';
 // Bootstrap
-import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 // Components
 

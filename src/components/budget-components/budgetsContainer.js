@@ -1,43 +1,26 @@
 import React from 'react';
+import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd';
 // CSS
 // Bootstrap
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/esm/Button';
-import Tooltip from 'react-bootstrap/Tooltip';
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 // Components
+import RenderedBudgets from './renderedBudgets';
+
+class List extends React.Component {
+    render() {
+      const { provided, innerRef, children } = this.props;
+      return (
+        <div {...provided.droppableProps} ref={innerRef}>
+          {children}
+        </div>
+      );
+    }
+}
 
 const BudgetsContainer = (props) => {
-    let fakeUserBudgets = [1,2,3]
-
-    let renderedBudgets = fakeUserBudgets.map(budget => {
-        /* Change All Inputs to state budget."*" object stored inside of db (this.props.budget."*") */
-        return (
-            <OverlayTrigger key='right' placement='right' overlay={
-                <Tooltip id={`tooltip-right`}>
-                   Click and Drag
-                </Tooltip>}>
-                <div className="rendered-budgets">
-                    <Col sm={{ span: 12, offset: 0 }} md={{ span: 12, offset: 0 }} lg={{ span: 12, offset: 0 }}>
-                        <Card>
-                            <Card.Body>
-                                <Card.Text className="budget-title"><strong>Budget Title</strong></Card.Text>
-                                <hr></hr>
-                                <Card.Text className="budget-description">Short Description of the Budget The User Gave...</Card.Text>
-                                <p className="budget-date">Last Edit: 00/00/00</p>
-                            </Card.Body>
-                        </Card>
-                    </Col>
-                </div>
-            </OverlayTrigger>
-        )
-    })
-
-    const renderHandler = () => {
-        return renderedBudgets.length > 4 ? renderedBudgets : defaultRender()
-    }
+    let fakeUserBudgets = [1,3];
     const defaultRender = () => {
         return (
             <Row className="rendered-budgets">
@@ -53,7 +36,22 @@ const BudgetsContainer = (props) => {
     }
     return (
         <div className="budgets-container">
-            {renderHandler()}
+            <DragDropContext>
+                <Droppable droppableId="droppable">
+                    {(provided) => (
+                        <List provided={provided} innerRef={provided.innerRef}>
+                            <Draggable draggableId="budget">
+                                {(provided) => (
+                                    fakeUserBudgets.map((budget) => {
+                                        return(budget !== 0 ? <RenderedBudgets budget={budget} provided={provided} innerRef={provided.innerRef} /> : defaultRender())
+                                    })
+                                )}
+                            </Draggable>
+                            {provided.placeholder}
+                        </List>
+                    )}
+                </Droppable>  
+            </DragDropContext>
         </div>
     );
 }
