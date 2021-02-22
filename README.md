@@ -1,5 +1,5 @@
 # Buckets
-## Full Stack Project - Digitial Crafts - <a href="https://github.com/DigitalCraftsStudents/hyb-fl-08-2020-cohort/blob/main/lectures/week-21/README.md">Requirments</a>
+## Full Stack Project - Digitial Crafts - <a href="https://github.com/DigitalCraftsStudents/hyb-fl-08-2020-cohort/blob/main/lectures/week-21/README.md">Requirements</a>
 
 ## Status: In Progress
 https://budget-tool-dc.netlify.app
