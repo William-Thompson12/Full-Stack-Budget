@@ -10,10 +10,20 @@
     box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.1);
     overflow: scroll;
     max-height: 85vh;
+    overflow-x: hidden; /* Hide horizontal scrollbar */
 }
 .height {
     height: 70vh;
     display: flex;
     text-align: center;
     align-items: center;
+    justify-content: center;
+}
+.budgets-folder-button {
+    outline: none;
+    box-shadow: none !important;
+    -webkit-appearance: none;
+    width: 50%;
+    text-align: center;
+    font-size: medium;
 }

@@ -3,7 +3,6 @@ import React from 'react';
 import '../budget-components/budgetsFolder.css';
 // Bootstrap
 import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
 import Accordion from 'react-bootstrap/Accordion';
 import Button from 'react-bootstrap/esm/Button';
 import Tooltip from 'react-bootstrap/Tooltip';
@@ -17,15 +16,15 @@ const BudgetsFolder = (props) => {
     return (
         <Col className="budgets-folder" sm={{ span: 12, offset: 0 }} md={{ span: 12, offset: 0 }} lg={{ span: 11, offset: 1 }}>
                 <Accordion defaultActiveKey="0">
-                    <Accordion.Toggle as={Button} variant="none" eventKey="0">
-                        <OverlayTrigger key='right' placement='right' overlay={
-                            <Tooltip id={`tooltip-right`}>Click Me!</Tooltip>}>
+                    <Accordion.Toggle className="budgets-folder-button" as={Button} variant="none" eventKey="0">
+                        <OverlayTrigger key='top' placement='top' overlay={
+                            <Tooltip id={`tooltip-top`}>Click Me!</Tooltip>}>
                                 <h3>Budgets</h3>
                         </OverlayTrigger>
                     </Accordion.Toggle>
-                    <Accordion.Toggle as={Button} variant="none" eventKey="1">
-                        <OverlayTrigger key='right' placement='right' overlay={
-                            <Tooltip id={`tooltip-right`}>Click Me!</Tooltip>}>
+                    <Accordion.Toggle className="budgets-folder-button" as={Button} variant="none" eventKey="1">
+                        <OverlayTrigger key='top' placement='top' overlay={
+                            <Tooltip id={`tooltip-top`}>Click Me!</Tooltip>}>
                                 <h3>Controls</h3>
                         </OverlayTrigger>
                     </Accordion.Toggle>

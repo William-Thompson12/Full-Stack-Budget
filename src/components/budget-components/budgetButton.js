@@ -7,8 +7,8 @@ const BudgetButton = (props) => {
 
     return (
         <>
-            <div className="budgett-button">
-                <Button variant="none" className="btn-none" onClick={null}>{null}</Button>
+            <div className="budget-button">
+                <Button variant="none" className="btn-none" onClick={props.handleClick}><h3>{props.buttonName}</h3></Button>
             </div>
         </>
     );

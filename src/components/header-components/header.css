@@ -12,4 +12,13 @@
     color: black;
     text-align: left;
 }
-
+.profile-buttons {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+.profile-buttons > Button {
+    width: 50%;
+}
