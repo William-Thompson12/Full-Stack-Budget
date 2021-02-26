@@ -10,6 +10,7 @@ import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
 import Tooltip from 'react-bootstrap/Tooltip';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Form from 'react-bootstrap/Form';
 // Components
 import Income from './incomeContainer';
 import Expense from './expenseContainer';
@@ -267,7 +268,8 @@ const Budget = (props) => {
 
     return (
         <>
-        {console.log(budgetInfo, budgetInfo.budgets, budgetInfo.budgets.income)}
+        {console.log(budgetInfo)}
+        {/*budget container */}
             <div className="budget">
                 <Row>
                     <h1>Budget Title</h1>
@@ -344,6 +346,8 @@ const Budget = (props) => {
                     </Col>
                 </Row>
             </div>
+                            
+            {/* Modals */}
             <Modal className="newIncome-modal" show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                     Enter Income Information Below
@@ -360,7 +364,24 @@ const Budget = (props) => {
                 <Modal.Header closeButton>
                     Enter Expense Information Below
                 </Modal.Header>
-                {/* New Expense Form */}
+                    <Form controlid="expense-form">
+                        <Form.Group>
+                            <Row>
+                                <Col sm={{ span: 12, offset: 0 }} md={{ span: 12, offset: 0 }} lg={{ span: 3, offset: 0 }}>
+                                    <Form.Label>Name</Form.Label>
+                                    <Form.Control id="expenseName" autoComplete="off" type="text" placeholder="Enter email" />
+                                </Col>
+                                <Col sm={{ span: 12, offset: 0 }} md={{ span: 12, offset: 0 }} lg={{ span: 3, offset: 0 }}>
+                                    <Form.Label>Amount</Form.Label>
+                                    <Form.Control autoComplete="off" id="expenseAmount" type="text" placeholder="20.00" />
+                                </Col>
+                                <Col sm={{ span: 12, offset: 0 }} md={{ span: 12, offset: 0 }} lg={{ span: 3, offset: 0 }}>
+                                    <Form.Label>Times Per Month</Form.Label>
+                                    <Form.Control id="perMonth" autoComplete="on" type="" placeholder="3" />
+                                </Col>
+                            </Row>
+                        </Form.Group>
+                    </Form>
                 <Modal.Footer>
                     <Row>
                         <Button variant="secondary" onClick={null}>Create New Expense</Button>
