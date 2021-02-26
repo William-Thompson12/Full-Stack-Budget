@@ -138,16 +138,15 @@ const BudgetsContainer = (props) => {
                 <Droppable droppableId="droppable">
                     {(provided) => (
                         <List provided={provided} innerRef={provided.innerRef}>
-                            {console.log(budgets.map((budget) => { return( <RenderedBudgets budgetName={budget} budgetDate={null} budgetDescription={null} provided={provided} innerRef={provided.innerRef} />)}))}
                             <Draggable key={1} draggableId='1'>
                                 {(provided) => (
-                                    budgetInfo.budgets.length === 0 ? defaultRender() : budgetInfo.budgets.map((budget) => { return( <RenderedBudgets budgetName={budget} budgetDate={null} budgetDescription={null} provided={provided} innerRef={provided.innerRef} />)})
+                                    budgetInfo.budgets.length === 0 ? defaultRender() : budgetInfo.budgets.map((budget) => { return( <RenderedBudgets budgetName={budget.name} budgetDate={null} budgetDescription={budget.description} provided={provided} innerRef={provided.innerRef} />)})
                                 )}
                             </Draggable>
                             {provided.placeholder}
                         </List>
                     )}
-                </Droppable>  
+                </Droppable>
             </DragDropContext>
         </div>
         <Modal className="newBudget-modal" show={show} onHide={handleClose}>
