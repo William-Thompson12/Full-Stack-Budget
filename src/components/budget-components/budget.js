@@ -5,12 +5,14 @@ import './budget.css';
 import { useState } from 'react';
 // Bootstrap
 import Modal from 'react-bootstrap/Modal';
+import Tab from 'react-bootstrap/Tab';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
 import Tooltip from 'react-bootstrap/Tooltip';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Form from 'react-bootstrap/Form';
+import Table from 'react-bootstrap/Table';
 // Components
 import Income from './incomeContainer';
 import Expense from './expenseContainer';
@@ -25,92 +27,8 @@ var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 //     lastUpdated: null,
 // }
 
-const budgetInfo = {
-    name: "William Thompson",
-    email: "testmail@mail.com",
-    budgets: [
-        {
-            name: "example",
-            expense: [
-                {
-                    name: 'Monthly Rent',
-                    amount: 300.00,
-                    times: 1
-                }
-            ],
-            income: [
-                {
-                    name: 'Monthly Pay',
-                    amount: 200.00,
-                    times: 2
-                }
-            ],
-            description: "My example budget etc...",
-            lastUpdated: "02/21/2021"
-        },
-        {
-            name: "example2",
-            expense: [
-                {
-                    name: 'Monthly Rent',
-                    amount: 300.00,
-                    times: 1
-                },
-                {
-                    name: 'Monthly Haircut',
-                    amount: 20.00,
-                    times: 1
-                }
-            ],
-            income: [
-                {
-                    name: 'Monthly Pay',
-                    amount: 200.00,
-                    times: 2
-                },
-                {
-                    name: 'Monthly Allowance',
-                    amount: 200.00,
-                    times: 2
-                }
-            ],
-            description: "My 2nd example budget etc...",
-            lastUpdated: "02/21/2021"
-        },
-        {
-            name: "example3",
-            expense: [
-                {
-                    name: 'Monthly Rent',
-                    amount: 300.00,
-                    times: 1
-                },
-                {
-                    name: 'Monthly Cut',
-                    amount: 200.00,
-                    times: 1
-                }
-            ],
-            income: [
-                {
-                    name: 'Monthly Pay',
-                    amount: 200.00,
-                    times: 2
-                },
-                {
-                    name: 'Monthly Pay',
-                    amount: 200.00,
-                    times: 2
-                }
-            ],
-            description: "My 2nd example budget etc...",
-            lastUpdated: "02/21/2021"
-        }
-    ]
-}
-
-
 const Budget = (props) => {
+    const budget = props.budget
     // modal
     const [show, setShow] = useState(false);
     const handleShow = () => setShow(true);
@@ -268,9 +186,9 @@ const Budget = (props) => {
 
     return (
         <>
-        {console.log(budgetInfo)}
+        {console.log(budget)}
         {/*budget container */}
-            <div className="budget">
+            <Tab.Pane eventKey={props.tabKey} className="budget">
                 <Row>
                     <h1>Budget Title</h1>
                 </Row>
@@ -324,10 +242,22 @@ const Budget = (props) => {
                                         <Button variant="success" onClick={handleShow}>+</Button>
                                 </OverlayTrigger>
                             </Col>
-                            {budgetInfo.budgets[0].income.map((income,index) => {
-                                return <Income key={index} incomeData={income} index={index}/>
-                            })}
-
+                            <br></br>
+                            <Table striped bordered hover>
+                                <thead>
+                                    <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Amount:</th>
+                                    <th># Per Month</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {budget.income.map((income,index) => {
+                                    return <Income key={index} incomeData={income} index={index}/>
+                                })}
+                                </tbody>
+                            </Table>
                         </div>
                     </Col>
                     <Col sm={{ span: 6, offset: 0 }} md={{ span: 6, offset: 0 }} lg={{ span: 6, offset: 0 }}>
@@ -339,13 +269,26 @@ const Budget = (props) => {
                                         <Button variant="danger" onClick={handleShow2}>-</Button>
                                 </OverlayTrigger>
                             </Col>
-                            {budgetInfo.budgets[0].expense.map((expense,index)=> {
-                                return <Expense key={index} expenseData={expense} index={index}/>
-                            })}
+                            <br></br>
+                            <Table striped bordered hover>
+                                <thead>
+                                    <tr>
+                                    <th>#</th>
+                                    <th>Name</th>
+                                    <th>Amount:</th>
+                                    <th># Per Month</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                {budget.expense.map((expense,index)=> {
+                                    return <Expense key={index} expenseData={expense} index={index}/>
+                                })}
+                                </tbody>
+                            </Table>
                         </div>
                     </Col>
                 </Row>
-            </div>
+            </Tab.Pane>
                             
             {/* Modals */}
             <Modal className="newIncome-modal" show={show} onHide={handleClose}>

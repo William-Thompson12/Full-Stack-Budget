@@ -1,35 +1,48 @@
 import React from 'react';
 import firebase from "../firebase";
 import { connect } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 // CSS
 import '../views/signup.css';
 // Components
 import Header from '../components/header-components/header';
 import Footer from '../components/footer-components/footer';
 import SignupContainer from '../components/auth/signupContainer';
+import UserData from '../services/users.services';
 // Actions
 import { logIn } from '../redux/actions';
 // Bootstrap 
 import Col from 'react-bootstrap/Col';
 
 const SignUp = (props) => {
-
+    const history = useHistory()
     function _signUp(){
         // Get Values
-        let emailValue = document.getElementById('email').value;
-        let passwordValue = document.getElementById('password').value;
+        const newUser = {
+            email: document.getElementById('email').value,
+            name: document.getElementById('first-name').value + document.getElementById('last-name').value,
+            userToken: "123123"
+        }
         let errorMessageBox = document.getElementById('errorMessage');
-        let name = document.getElementById('first-name').value + document.getElementById('last-name').value;
+        let password = document.getElementById('password').value;
         firebase
         .auth()
-        .createUserWithEmailAndPassword(emailValue, passwordValue)
+        .createUserWithEmailAndPassword(newUser.email, password)
         .then(function(){
             console.log('account made')
-            .signInWithEmailAndPassword(emailValue, passwordValue)
-            .then(function(){
-                //LogIn
-                this.props.logInClick();
-                console.log(this.props.loggedIn);
+            .signInWithEmailAndPassword(newUser.email, password)
+            .then(() => {
+                history.push("/home")
+                .then(() => {
+                    UserData.create(newUser);
+                })
+                .then(() => {
+                    UserData.get(newUser.userToken)
+                    .then((response) => {
+                        props.logInClick();
+                        props.findUser(response.data);
+                    })
+                })
             })
         })
         .catch(function(error) {

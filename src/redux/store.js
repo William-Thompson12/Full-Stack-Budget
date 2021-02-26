@@ -6,7 +6,8 @@ export const defaultState = {
     loggedIn: false,
     user: {
       name: " ",
-      email: " "
+      email: " ",
+      userToken: " "
     },
     budgets: []
 }

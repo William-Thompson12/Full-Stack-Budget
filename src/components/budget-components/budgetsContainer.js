@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd';
 import { useState } from 'react';
 // Bootstrap
 import Modal from 'react-bootstrap/Modal';
@@ -12,18 +11,6 @@ import RenderedBudgets from './renderedBudgets';
 import NewBudgetForm from './newBudgetForm';
 // Actions
 import { createBudget } from '../../redux/actions';
-
-
-class List extends React.Component {
-    render() {
-      const { provided, innerRef, children } = this.props;
-      return (
-        <div {...provided.droppableProps} ref={innerRef}>
-          {children}
-        </div>
-      );
-    }
-}
 
 const budgetInfo = {
     name: "William Thompson",
@@ -110,7 +97,6 @@ const budgetInfo = {
 }
 
 const BudgetsContainer = (props) => {
-    const budgets = props.budgets
     // modal
     const [show, setShow] = useState(false);
     const handleShow = () => setShow(true);
@@ -134,21 +120,9 @@ const BudgetsContainer = (props) => {
     return (
         <>
         <div className="budgets-container">
-            <DragDropContext>
-                <Droppable droppableId="droppable">
-                    {(provided) => (
-                        <List provided={provided} innerRef={provided.innerRef}>
-                            <Draggable key={1} draggableId='1'>
-                                {(provided) => (
-                                    budgetInfo.budgets.length === 0 ? defaultRender() : budgetInfo.budgets.map((budget) => { return( <RenderedBudgets budgetName={budget.name} budgetDate={null} budgetDescription={budget.description} provided={provided} innerRef={provided.innerRef} />)})
-                                )}
-                            </Draggable>
-                            {provided.placeholder}
-                        </List>
-                    )}
-                </Droppable>
-            </DragDropContext>
+            {budgetInfo.budgets.length === 0 ? defaultRender() : budgetInfo.budgets.map((budget,index) => { return( <RenderedBudgets tabKey={index} budgetName={budget.name} budgetDate={null} budgetDescription={budget.description}/>)})}
         </div>
+        {/* Modal */}
         <Modal className="newBudget-modal" show={show} onHide={handleClose}>
             <Modal.Header closeButton>
                 Enter Budget Information Below

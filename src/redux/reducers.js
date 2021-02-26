@@ -29,11 +29,12 @@ export function userReducer(state={name: " ", email: " "}, action) {
             return state;
         }
         case FIND_USER: {
-            const userI = {
-                name: action.payload.fakeUser.name,
-                email: action.payload.fakeUser.email
+            const userD = {
+                name: action.payload.userD.name,
+                email: action.payload.userD.email,
+                userToken: action.payload.userD.userToken
             }
-            return userI;
+            return userD;
         }
         default: 
             return state;

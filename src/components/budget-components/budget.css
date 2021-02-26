@@ -25,3 +25,7 @@
 .budget {
     padding: 5%;
 }
+.budget-income {
+    border-bottom: 1px solid lightgreen;
+    border-top: 1px solid lightgreen;
+}

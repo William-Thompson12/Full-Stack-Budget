@@ -3,6 +3,7 @@ import React from 'react';
 import '../budget-components/budgetsFolder.css';
 // Bootstrap
 import Col from 'react-bootstrap/Col';
+import Nav from 'react-bootstrap/Nav';
 import Accordion from 'react-bootstrap/Accordion';
 import Button from 'react-bootstrap/esm/Button';
 import Tooltip from 'react-bootstrap/Tooltip';
@@ -29,7 +30,9 @@ const BudgetsFolder = (props) => {
                     </OverlayTrigger>
                 </Accordion.Toggle>
                 <Accordion.Collapse eventKey="0">
-                    <BudgetsContainer/>
+                    <Nav>
+                        <BudgetsContainer/>
+                    </Nav>
                 </Accordion.Collapse>
                 <div className="budget-controls">
                     <Accordion.Collapse eventKey="1">
