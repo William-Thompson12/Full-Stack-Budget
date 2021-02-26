@@ -1,0 +1,24 @@
+.navbar-brand {
+    font-size: xx-large;
+    border-bottom: black 2px solid;
+}
+#collasible-nav-dropdown {
+    text-decoration: none;
+    color: black;
+    text-align: center;
+}
+.dropdown-menu.show > a {
+    text-decoration: none;
+    color: black;
+    text-align: left;
+}
+.profile-buttons {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+.profile-buttons > Button {
+    width: 50%;
+}
