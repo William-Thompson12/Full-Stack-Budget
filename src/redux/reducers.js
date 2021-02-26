@@ -6,7 +6,8 @@ import {
     DELETE_USER,
     UPDATE_BUDGET,
     DELETE_BUDGET,
-    CREATE_BUDGET
+    CREATE_BUDGET,
+    COPY_BUDGET
 } from './actions';
 
 export function loginReducer(state=false, action) {
@@ -28,7 +29,11 @@ export function userReducer(state={name: " ", email: " "}, action) {
             return state;
         }
         case FIND_USER: {
-            return state;
+            const userI = {
+                name: action.payload.fakeUser.name,
+                email: action.payload.fakeUser.email
+            }
+            return userI;
         }
         default: 
             return state;
@@ -38,16 +43,24 @@ export function userReducer(state={name: " ", email: " "}, action) {
 export function budgetsReducer(state=[], action) {
     switch(action.type) {
         case FIND_USER: {
-            return state;
+            const userI = action.payload.fakeUser.budgets;
+            return userI;
         }
         case UPDATE_BUDGET: {
             return state;
         }
+        case COPY_BUDGET: {
+            const copy = action.payload.budget;
+            return [...state, copy];
+        }
         case DELETE_BUDGET: {
             return state;
         }
+        // FUNCTION SENDS NEWBUDGET BUT DOESN'T 
         case CREATE_BUDGET: {
-            return state;
+            const newBudget = action.payload.newBudget;
+            console.log('creating budget', newBudget)
+            return [newBudget];
         }
         default: 
             return state;

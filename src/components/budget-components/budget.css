@@ -1,0 +1,29 @@
+.income-container {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    color: green;
+}
+.expenses-container {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    color: red;
+}
+.graph-container {
+    background: #fff;
+    -webkit-box-shadow: 0 6px 4px -4px rgba(0, 0, 0, 0.877);
+    -moz-box-shadow: 0 6px 4px -4px rgba(0, 0, 0, 0.87);
+    box-shadow: 0 6px 4px -4px rgba(0, 0, 0, 0.877);
+    margin-bottom: 5%;
+}
+.details-container {
+    background: #fff;
+    -webkit-box-shadow: 0 6px 4px -4px rgba(0, 0, 0, 0.877);
+    -moz-box-shadow: 0 6px 4px -4px rgba(0, 0, 0, 0.87);
+    box-shadow: 0 6px 4px -4px rgba(0, 0, 0, 0.877);
+    margin-bottom: 5%;
+}
+.budget {
+    padding: 5%;
+}

@@ -25,16 +25,16 @@ class LoginContainer extends React.Component{
                     </div>
                     <Form controlid="loginForm">
                         <Form.Group>
-                        <Row>
-                            <Col>
-                                <Form.Label>Email</Form.Label>
-                                <Form.Control id="loginEmail" autoComplete="off" type="email" placeholder="Enter email" />
-                            </Col>
-                            <Col>
-                                <Form.Label>Password</Form.Label>
-                                <Form.Control autoComplete="off" id="loginPassword" type="password" placeholder="Password" />
-                            </Col>
-                        </Row>
+                            <Row>
+                                <Col>
+                                    <Form.Label>Email</Form.Label>
+                                    <Form.Control id="loginEmail" autoComplete="off" type="email" placeholder="Enter email" />
+                                </Col>
+                                <Col>
+                                    <Form.Label>Password</Form.Label>
+                                    <Form.Control autoComplete="off" id="loginPassword" type="password" placeholder="Password" />
+                                </Col>
+                            </Row>
                         </Form.Group>
                         <Form.Group>
                             <Row>
@@ -47,7 +47,7 @@ class LoginContainer extends React.Component{
                             <span className="d-block text-center my-4 text-muted"> or sign in with</span>
                             <div className="social-login text-center">'
                                 {/* Add Google Login Through FireBase */}
-                                <Button className="btn-dark" onClick={null}><span className="icon-google"></span></Button>
+                                <Button variant="secondary" onClick={null}><span className="icon-google"></span></Button>
                             </div>
                         </Form.Group>
                     </Form>

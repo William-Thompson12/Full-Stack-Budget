@@ -15,29 +15,29 @@ const BudgetsFolder = (props) => {
 
     return (
         <Col className="budgets-folder" sm={{ span: 12, offset: 0 }} md={{ span: 12, offset: 0 }} lg={{ span: 11, offset: 1 }}>
-                <Accordion defaultActiveKey="0">
-                    <Accordion.Toggle className="budgets-folder-button" as={Button} variant="none" eventKey="0">
-                        <OverlayTrigger key='top' placement='top' overlay={
-                            <Tooltip id={`tooltip-top`}>Click Me!</Tooltip>}>
-                                <h3>Budgets</h3>
-                        </OverlayTrigger>
-                    </Accordion.Toggle>
-                    <Accordion.Toggle className="budgets-folder-button" as={Button} variant="none" eventKey="1">
-                        <OverlayTrigger key='top' placement='top' overlay={
-                            <Tooltip id={`tooltip-top`}>Click Me!</Tooltip>}>
-                                <h3>Controls</h3>
-                        </OverlayTrigger>
-                    </Accordion.Toggle>
-                    <Accordion.Collapse eventKey="0">
-                        <BudgetsContainer/>
+            <Accordion defaultActiveKey="0">
+                <Accordion.Toggle className="budgets-folder-button" as={Button} variant="none" eventKey="0">
+                    <OverlayTrigger key='top' placement='top' overlay={
+                        <Tooltip id={`tooltip-top`}>Click Me!</Tooltip>}>
+                            <h3>Budgets</h3>
+                    </OverlayTrigger>
+                </Accordion.Toggle>
+                <Accordion.Toggle className="budgets-folder-button" as={Button} variant="none" eventKey="1">
+                    <OverlayTrigger key='top' placement='top' overlay={
+                        <Tooltip id={`tooltip-top`}>Click Me!</Tooltip>}>
+                            <h3>Controls</h3>
+                    </OverlayTrigger>
+                </Accordion.Toggle>
+                <Accordion.Collapse eventKey="0">
+                    <BudgetsContainer/>
+                </Accordion.Collapse>
+                <div className="budget-controls">
+                    <Accordion.Collapse eventKey="1">
+                        <BudgetControls/>
                     </Accordion.Collapse>
-                    <div className="budget-controls">
-                        <Accordion.Collapse eventKey="1">
-                            <BudgetControls/>
-                        </Accordion.Collapse>
-                    </div>
-                </Accordion>
-            </Col>
+                </div>
+            </Accordion>
+        </Col>
         );
 }
 

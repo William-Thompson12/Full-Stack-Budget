@@ -9,13 +9,14 @@ import Footer from '../components/footer-components/footer';
 import LoginContainer from '../components/auth/loginContainer';
 import Article from '../components/articleContainer';
 // Actions
-import { logIn } from '../redux/actions';
+import { findUser, logIn } from '../redux/actions';
 // Bootstrap 
 import Col from 'react-bootstrap/Col';
-import Row from 'react-bootstrap/Row';
+import Row from 'react-bootstrap/Row'
+import { useHistory } from 'react-router-dom';
 
 const HomePage = (props) => {
-
+    const history = useHistory()
     function _loginIn() {
         let emailValue = document.getElementById('loginEmail').value;
         let passwordValue = document.getElementById('loginPassword').value;
@@ -23,13 +24,14 @@ const HomePage = (props) => {
         firebase
         .auth()
         .signInWithEmailAndPassword(emailValue, passwordValue)
-        .then(function(response){
-            //LogIn
+        // .then((response) => {
+        //     history.push("/mainHub")
+        //     return response
+        // })
+        .then((response) => {
             props.logInClick();
-            console.log(response);
-        })
-        .then(function(){
-
+            props.findUser();
+            console.log('User Log in successful, finding saved data', response)
         })
         .catch(function(error) {
             errorMessageBox.innerHTML = error.message;
@@ -63,7 +65,8 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         // Translate redux dispatch into props
-        logInClick: () => { dispatch(logIn()) }
+        logInClick: () => { dispatch(logIn()) },
+        findUser: () => { dispatch(findUser()) }
     }
 }
 
