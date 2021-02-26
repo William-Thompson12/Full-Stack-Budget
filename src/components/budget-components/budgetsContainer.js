@@ -1,12 +1,18 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd';
-// CSS
+import { useState } from 'react';
 // Bootstrap
+import Modal from 'react-bootstrap/Modal';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/esm/Button';
 // Components
 import RenderedBudgets from './renderedBudgets';
+import NewBudgetForm from './newBudgetForm';
+// Actions
+import { createBudget } from '../../redux/actions';
+
 
 class List extends React.Component {
     render() {
@@ -19,32 +25,123 @@ class List extends React.Component {
     }
 }
 
+const budgetInfo = {
+    name: "William Thompson",
+    email: "testmail@mail.com",
+    budgets: [
+        {
+            name: "example",
+            expense: [
+                {
+                    name: 'Monthly Rent',
+                    amount: 300.00,
+                    times: 1
+                }
+            ],
+            income: [
+                {
+                    name: 'Monthly Pay',
+                    amount: 200.00,
+                    times: 2
+                }
+            ],
+            description: "My example budget etc...",
+            lastUpdated: "02/21/2021"
+        },
+        {
+            name: "example2",
+            expense: [
+                {
+                    name: 'Monthly Rent',
+                    amount: 300.00,
+                    times: 1
+                },
+                {
+                    name: 'Monthly Haircut',
+                    amount: 20.00,
+                    times: 1
+                }
+            ],
+            income: [
+                {
+                    name: 'Monthly Pay',
+                    amount: 200.00,
+                    times: 2
+                },
+                {
+                    name: 'Monthly Allowance',
+                    amount: 200.00,
+                    times: 2
+                }
+            ],
+            description: "My 2nd example budget etc...",
+            lastUpdated: "02/21/2021"
+        },
+        {
+            name: "example3",
+            expense: [
+                {
+                    name: 'Monthly Rent',
+                    amount: 300.00,
+                    times: 1
+                },
+                {
+                    name: 'Monthly Cut',
+                    amount: 200.00,
+                    times: 1
+                }
+            ],
+            income: [
+                {
+                    name: 'Monthly Pay',
+                    amount: 200.00,
+                    times: 2
+                },
+                {
+                    name: 'Monthly Pay',
+                    amount: 200.00,
+                    times: 2
+                }
+            ],
+            description: "My 2nd example budget etc...",
+            lastUpdated: "02/21/2021"
+        }
+    ]
+}
+
 const BudgetsContainer = (props) => {
-    let fakeUserBudgets = [1,3];
+    const budgets = props.budgets
+    // modal
+    const [show, setShow] = useState(false);
+    const handleShow = () => setShow(true);
+    const handleClose = () => setShow(false);
+    // end modal
+
     const defaultRender = () => {
         return (
             <Row className="rendered-budgets">
                 <Col sm={{ span: 12, offset: 0 }} md={{ span: 12, offset: 0 }} lg={{ span: 12, offset: 0 }}>
                     <div className="height">
-                        <h4>Make A New Budget</h4>
+                        <h4>Make A New Budget </h4>
                         {/* Replace with new budget function */}
-                        <Button onClick={null}>+</Button>
+                        <Button  variant="secondary" onClick={handleShow}>+</Button>
                     </div>
                 </Col>
             </Row>
         )
     }
+
     return (
+        <>
         <div className="budgets-container">
             <DragDropContext>
                 <Droppable droppableId="droppable">
                     {(provided) => (
                         <List provided={provided} innerRef={provided.innerRef}>
-                            <Draggable draggableId="budget">
+                            {console.log(budgets.map((budget) => { return( <RenderedBudgets budgetName={budget} budgetDate={null} budgetDescription={null} provided={provided} innerRef={provided.innerRef} />)}))}
+                            <Draggable key={1} draggableId='1'>
                                 {(provided) => (
-                                    fakeUserBudgets.map((budget) => {
-                                        return(budget !== 0 ? <RenderedBudgets budget={budget} provided={provided} innerRef={provided.innerRef} /> : defaultRender())
-                                    })
+                                    budgetInfo.budgets.length === 0 ? defaultRender() : budgetInfo.budgets.map((budget) => { return( <RenderedBudgets budgetName={budget} budgetDate={null} budgetDescription={null} provided={provided} innerRef={provided.innerRef} />)})
                                 )}
                             </Draggable>
                             {provided.placeholder}
@@ -53,7 +150,33 @@ const BudgetsContainer = (props) => {
                 </Droppable>  
             </DragDropContext>
         </div>
+        <Modal className="newBudget-modal" show={show} onHide={handleClose}>
+            <Modal.Header closeButton>
+                Enter Budget Information Below
+            </Modal.Header>
+            <NewBudgetForm/>
+            <Modal.Footer>
+                <Row>
+                    <Button variant="secondary" onClick={() => createBudget()}>Create New Budget</Button>
+                </Row>        
+            </Modal.Footer>
+        </Modal>
+        </>
     );
 }
 
-export default BudgetsContainer 
+function mapStateToProps(state) {
+    return {
+        budgets: state.budgets
+    }
+}
+function mapDispatchToProps(dispatch) {
+    return {
+        // Translate redux dispatch into props
+        createBudget: () => { 
+            dispatch(createBudget())
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(BudgetsContainer);

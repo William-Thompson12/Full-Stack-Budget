@@ -20,10 +20,10 @@ class RenderedBudgets extends React.Component {
                     <Col sm={{ span: 12, offset: 0 }} md={{ span: 12, offset: 0 }} lg={{ span: 12, offset: 0 }}>
                         <Card>
                             <Card.Body>
-                                <Card.Text className="budget-title"><strong>Budget Title{this.props.budget}</strong></Card.Text>
+                                <Card.Text className="budget-title"><strong>{this.props.budgetName}</strong></Card.Text>
                                 <hr></hr>
-                                <Card.Text className="budget-description">Short Description of the Budget The User Gave...</Card.Text>
-                                <p className="budget-date">Last Edit: 00/00/00</p>
+                                <Card.Text className="budget-description">{this.props.budgetDescription}</Card.Text>
+                                <p className="budget-date">Last Edit: {this.props.budgetDate}</p>
                             </Card.Body>
                         </Card>
                     </Col>

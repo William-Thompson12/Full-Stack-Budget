@@ -1,14 +1,22 @@
 import React from 'react';
 import firebase from "../firebase";
+import { connect } from 'react-redux';
 // CSS
 import '../views/home.css';
 // Components
-import Header from '../components/header';
-import Footer from '../components/footer';
-import LoginContainer from '../components/loginContainer';
+import Header from '../components/header-components/header';
+import Footer from '../components/footer-components/footer';
+import LoginContainer from '../components/auth/loginContainer';
+import Article from '../components/articleContainer';
+// Actions
+import { findUser, logIn } from '../redux/actions';
+// Bootstrap 
+import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row'
+import { useHistory } from 'react-router-dom';
 
 const HomePage = (props) => {
-
+    const history = useHistory()
     function _loginIn() {
         let emailValue = document.getElementById('loginEmail').value;
         let passwordValue = document.getElementById('loginPassword').value;
@@ -16,13 +24,18 @@ const HomePage = (props) => {
         firebase
         .auth()
         .signInWithEmailAndPassword(emailValue, passwordValue)
-        .then(function(){
-        //signin
-        console.log('logged in')
+        // .then((response) => {
+        //     history.push("/mainHub")
+        //     return response
+        // })
+        .then((response) => {
+            props.logInClick();
+            props.findUser();
+            console.log('User Log in successful, finding saved data', response)
         })
         .catch(function(error) {
-        errorMessageBox.innerHTML = error.message;
-        console.log(error.message)
+            errorMessageBox.innerHTML = error.message;
+            console.log(error.message);
         });
     }
 
@@ -30,11 +43,31 @@ const HomePage = (props) => {
         <div className="page">
             <Header/>
             <div className="main">
-                <LoginContainer handleClick={_loginIn}/>
+                <Row>
+                    <Col sm={{ span: 11, offset: 1 }} md={{ span: 11, offset: 1 }} lg={{ span: 3, offset: 1 }}>
+                        <Article />
+                    </Col>
+                    <Col sm={12} md={12} lg={4}>
+                        <LoginContainer handleClick={_loginIn}/>
+                    </Col>
+                </Row>
             </div>
             <Footer/>
         </div>
     );
 }
 
-export default HomePage 
+function mapStateToProps(state) {
+    return {
+        loggedIn: state.loggedIn
+    }
+}
+function mapDispatchToProps(dispatch) {
+    return {
+        // Translate redux dispatch into props
+        logInClick: () => { dispatch(logIn()) },
+        findUser: () => { dispatch(findUser()) }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(HomePage);
