@@ -7,12 +7,12 @@ import "firebase/auth";
 import "firebase/firestore";
 
 const firebaseConfig = {
-    apiKey: process.env.API_KEY,
+    apiKey: "AIzaSyBFyYkZGh_zxNTm1-IL8G6ERtwB_POprUg",
     authDomain: "budget-tool-dc.firebaseapp.com",
     projectId: "budget-tool-dc",
     storageBucket: "budget-tool-dc.appspot.com",
-    messagingSenderId: process.env.SENDER_ID,
-    appId: process.env.APP_ID
+    messagingSenderId: "550952491264",
+    appId: "1:550952491264:web:31431ec0377a81010a3be5"
 };
 
 firebase.initializeApp(firebaseConfig);

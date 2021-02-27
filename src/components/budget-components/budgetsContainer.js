@@ -120,7 +120,7 @@ const BudgetsContainer = (props) => {
     return (
         <>
         <Nav variant="pills" className="budgets-container">
-            {budgetInfo.budgets.length === 0 ? defaultRender() : budgetInfo.budgets.map((budget,index) => { return( <RenderedBudgets tabKey={index} handleClick={setBudget} budgetName={budget.name} budgetDate={null} budgetDescription={budget.description}/>)})}
+            {budgetInfo.budgets.length === 0 ? defaultRender() : budgetInfo.budgets.map((budget,index) => { return( <RenderedBudgets tabKey={`${index}`} handleClick={setBudget} budgetName={budget.name} budgetDate={null} budgetDescription={budget.description}/>)})}
         </Nav>
         {/* Modal */}
         <Modal className="newBudget-modal" show={show} onHide={handleClose}>

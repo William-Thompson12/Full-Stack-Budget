@@ -25,15 +25,17 @@ const HomePage = (props) => {
         firebase
         .auth()
         .signInWithEmailAndPassword(emailValue, passwordValue)
-        .then(() => {
-            history.push("/mainHub")
-            .then(() => {
-                UserData.get()
-                .then((response) => {
-                    props.logInClick();
-                    props.findUser(response.data);
-                })
-            })
+        .then((response) => {
+            history.push("/mainHub");
+            return response.user.uid
+        })
+        .then((response) => {
+            return UserData.get(response);
+        })
+        .then((response) => {
+            console.log(response);
+            props.logInClick();
+            props.findUser(response.data);
         })
         .catch(function(error) {
             errorMessageBox.innerHTML = error.message;

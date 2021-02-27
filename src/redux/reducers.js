@@ -35,6 +35,8 @@ export function userReducer(state={name: " ", email: " "}, action) {
                 email: action.payload.userD.email,
                 userToken: action.payload.userD.userToken
             }
+
+            console.log(userD, 'running reducer')
             return userD;
         }
         default: 

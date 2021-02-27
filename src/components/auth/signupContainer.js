@@ -24,11 +24,11 @@ class SignupContainer extends React.Component{
                             <Row>
                                 <Col>
                                     <Form.Label>Email</Form.Label>
-                                    <Form.Control id="loginEmail" autoComplete="off" type="email" placeholder="Enter email" />
+                                    <Form.Control id="email" autoComplete="off" type="email" placeholder="Enter email" />
                                 </Col>
                                 <Col>
                                     <Form.Label>Password</Form.Label>
-                                    <Form.Control autoComplete="off" id="loginPassword" type="password" placeholder="Password" />
+                                    <Form.Control autoComplete="off" id="password" type="password" placeholder="Password" />
                                 </Col>
                             </Row>
                         </Form.Group>
@@ -44,6 +44,7 @@ class SignupContainer extends React.Component{
                                 </Col>
                             </Row>
                         </Form.Group>
+                        <div id="errorMessage"></div>
                         <Form.Group>
                             <Button className="btn-dark" onClick={() => this.props.handleClick()}>Submit</Button>
                         </Form.Group>

@@ -8,7 +8,6 @@ import Nav from 'react-bootstrap/Nav';
 class RenderedBudgets extends React.Component {
     render() {
         return (
-            /* Change All Inputs to state budget."*" object stored inside of db (this.props.budget."*") */
             <Nav.Item className="rendered-budgets">
                 <Nav.Link onClick={() => this.props.handleClick(this.props.tabKey)} eventKey={this.props.tabKey}>
                     <Col sm={{ span: 12, offset: 0 }} md={{ span: 12, offset: 0 }} lg={{ span: 12, offset: 0 }}>

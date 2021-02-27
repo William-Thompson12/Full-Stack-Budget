@@ -9,7 +9,6 @@ export const CREATE_BUDGET = 'CREATE_BUDGET';
 export const UPDATE_BUDGET = 'UPDATE_BUDGET';
 export const COPY_BUDGET = 'COPY_BUDGET';
 export const DELETE_BUDGET = 'DELETE_BUDGET';
-export const CREATE_PDF = 'CREATE_PDF';
 // Active Budget Types;
 export const SET_BUDGET = "SET_BUDGET";
 
@@ -56,10 +55,6 @@ export function findUser(userD) {
 }export function deleteBudget() {
     return {
         type: DELETE_BUDGET
-    }
-}export function createPdf(){
-    return  {
-        type: CREATE_PDF
     }
 }export function logIn() {
     return {

@@ -12,6 +12,7 @@
     "express": "^4.17.1",
     "firebase": "^8.2.7",
     "i": "^0.3.6",
+    "js-cookie": "^2.2.1",
     "pg": "^8.5.1",
     "react": "^17.0.1",
     "react-beautiful-dnd": "^13.0.0",

@@ -17,6 +17,7 @@ import Col from 'react-bootstrap/Col';
 const SignUp = (props) => {
     const history = useHistory()
     function _signUp(){
+        console.log( document.getElementById('email').value, document.getElementById('first-name').value + document.getElementById('last-name').value)
         // Get Values
         const newUser = {
             email: document.getElementById('email').value,
@@ -27,27 +28,15 @@ const SignUp = (props) => {
         firebase
         .auth()
         .createUserWithEmailAndPassword(newUser.email, password)
-        .then(function(){
-            console.log('account made')
-            .signInWithEmailAndPassword(newUser.email, password)
-            .then(() => {
-                history.push("/home")
-                .then(() => {
-                    
-                    const updatedUser = {
-                        ...newUser,
-                        userToken: "123123"
-                    }
-                    UserData.create(updatedUser);
-                })
-                .then(() => {
-                    UserData.get(newUser.userToken)
-                    .then((response) => {
-                        props.logInClick();
-                        props.findUser(response.data);
-                    })
-                })
-            })
+        .then((response) => {
+            const updatedUser = {
+                ...newUser,
+                userToken: response.user.uid
+            }
+            UserData.create(updatedUser);
+        })
+        .then(() => {
+            history.push("/home")
         })
         .catch(function(error) {
             errorMessageBox.innerHTML = error.message;

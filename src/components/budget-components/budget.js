@@ -24,7 +24,6 @@ var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 const Budget = (props) => {
     const budget = props.budget
-    console.log(<BudgetCalculations/>)
     // modal
     const [show, setShow] = useState(false);
     const handleShow = () => setShow(true);
@@ -193,7 +192,7 @@ const Budget = (props) => {
                         <p>{budget.description}</p>
                     </Col>
                     <Col sm={{ span: 2, offset: 2 }} md={{ span: 2, offset: 6 }} lg={{ span: 2, offset: 6 }}>
-                        <p>Last Edit:{budget.lastUpdated}</p>
+                        <p>Last Edit: {budget.lastUpdated}</p>
                     </Col>
                 </Row>
                 <Row  className="graph-container">
