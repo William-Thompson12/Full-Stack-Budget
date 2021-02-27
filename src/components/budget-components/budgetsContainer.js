@@ -5,12 +5,13 @@ import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
+import Nav from 'react-bootstrap/Nav';
 import Button from 'react-bootstrap/esm/Button';
 // Components
 import RenderedBudgets from './renderedBudgets';
 import NewBudgetForm from './newBudgetForm';
 // Actions
-import { createBudget } from '../../redux/actions';
+import { createBudget, setBudget } from '../../redux/actions';
 
 const budgetInfo = {
     name: "William Thompson",
@@ -116,12 +117,11 @@ const BudgetsContainer = (props) => {
             </Row>
         )
     }
-
     return (
         <>
-        <div className="budgets-container">
-            {budgetInfo.budgets.length === 0 ? defaultRender() : budgetInfo.budgets.map((budget,index) => { return( <RenderedBudgets tabKey={index} budgetName={budget.name} budgetDate={null} budgetDescription={budget.description}/>)})}
-        </div>
+        <Nav variant="pills" className="budgets-container">
+            {budgetInfo.budgets.length === 0 ? defaultRender() : budgetInfo.budgets.map((budget,index) => { return( <RenderedBudgets tabKey={index} handleClick={setBudget} budgetName={budget.name} budgetDate={null} budgetDescription={budget.description}/>)})}
+        </Nav>
         {/* Modal */}
         <Modal className="newBudget-modal" show={show} onHide={handleClose}>
             <Modal.Header closeButton>
@@ -146,8 +146,11 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         // Translate redux dispatch into props
-        createBudget: () => { 
+        createBudget:() => { 
             dispatch(createBudget())
+        },
+        setBudget:(budget) => {
+            dispatch(setBudget(budget))
         }
     }
 }

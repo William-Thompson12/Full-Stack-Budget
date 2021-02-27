@@ -1,5 +1,6 @@
 import React from 'react';
 import CanvasJSReact from "../canvasjs-3.2.9/canvasjs.react"
+import { connect } from 'react-redux';
 // CSS
 import './budget.css';
 import { useState } from 'react';
@@ -16,19 +17,14 @@ import Table from 'react-bootstrap/Table';
 // Components
 import Income from './incomeContainer';
 import Expense from './expenseContainer';
+import BudgetCalculations from './budgetCalculations';
 // Charts
 var CanvasJS = CanvasJSReact.CanvasJS;
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
-// const budgetInfo = {
-//     name: "",
-//     expense: [],
-//     income: [],
-//     description: "",
-//     lastUpdated: null,
-// }
 
 const Budget = (props) => {
     const budget = props.budget
+    console.log(<BudgetCalculations/>)
     // modal
     const [show, setShow] = useState(false);
     const handleShow = () => setShow(true);
@@ -190,14 +186,14 @@ const Budget = (props) => {
         {/*budget container */}
             <Tab.Pane eventKey={props.tabKey} className="budget">
                 <Row>
-                    <h1>Budget Title</h1>
+                    <h1>{budget.name}</h1>
                 </Row>
                 <Row>
                     <Col sm={{ span: 6, offset: 0 }} md={{ span: 4, offset: 0 }} lg={{ span: 4, offset: 0 }}>
-                        <p>Example description going here...</p>
+                        <p>{budget.description}</p>
                     </Col>
                     <Col sm={{ span: 2, offset: 2 }} md={{ span: 2, offset: 6 }} lg={{ span: 2, offset: 6 }}>
-                        <p>Last Edit: 00/00/0000</p>
+                        <p>Last Edit:{budget.lastUpdated}</p>
                     </Col>
                 </Row>
                 <Row  className="graph-container">
@@ -335,4 +331,17 @@ const Budget = (props) => {
     );
 }
 
-export default Budget
+function mapStateToProps(state) {
+    return {
+        loggedIn: state.loggedIn,
+        user: state.user,
+        budgets: state.budgets,
+        activeBudget: state.activeBudget
+        }
+}
+function mapDispatchToProps(dispatch) {
+    return {
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Budget);

@@ -10,6 +10,8 @@ export const UPDATE_BUDGET = 'UPDATE_BUDGET';
 export const COPY_BUDGET = 'COPY_BUDGET';
 export const DELETE_BUDGET = 'DELETE_BUDGET';
 export const CREATE_PDF = 'CREATE_PDF';
+// Active Budget Types;
+export const SET_BUDGET = "SET_BUDGET";
 
 export function findUser(userD) {
     return {
@@ -62,5 +64,13 @@ export function findUser(userD) {
 }export function logIn() {
     return {
         type: LOG_IN
+    }
+}export function setBudget(budget) {
+    console.log(budget)
+    return {
+        type: SET_BUDGET,
+        payload: {
+            budget
+        }
     }
 }

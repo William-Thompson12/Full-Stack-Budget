@@ -4,13 +4,14 @@ import '../budget-components/actionContainer.css';
 // Bootstrap
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
+import Tab from 'react-bootstrap/Tab';
 // Components
 import BudgetsFolder from './budgetsFolder';
 import BudgetBuilder from './budgetBuilder';
 
 const ActionContainer = (props) => {
     return (
-        <div className="action-container">
+        <Tab.Container id="action-container" defaultActiveKey="0" className="action-container">
             <Row>
                 <Col sm={12} md={3} lg={3}>
                     <BudgetsFolder/>
@@ -19,7 +20,7 @@ const ActionContainer = (props) => {
                     <BudgetBuilder/>
                 </Col>
             </Row>
-        </div>
+        </Tab.Container>
     );
 }
 

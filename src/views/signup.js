@@ -20,8 +20,7 @@ const SignUp = (props) => {
         // Get Values
         const newUser = {
             email: document.getElementById('email').value,
-            name: document.getElementById('first-name').value + document.getElementById('last-name').value,
-            userToken: "123123"
+            name: document.getElementById('first-name').value + document.getElementById('last-name').value
         }
         let errorMessageBox = document.getElementById('errorMessage');
         let password = document.getElementById('password').value;
@@ -34,7 +33,12 @@ const SignUp = (props) => {
             .then(() => {
                 history.push("/home")
                 .then(() => {
-                    UserData.create(newUser);
+                    
+                    const updatedUser = {
+                        ...newUser,
+                        userToken: "123123"
+                    }
+                    UserData.create(updatedUser);
                 })
                 .then(() => {
                     UserData.get(newUser.userToken)

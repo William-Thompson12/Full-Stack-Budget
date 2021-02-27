@@ -9,7 +9,8 @@ export const defaultState = {
       email: " ",
       userToken: " "
     },
-    budgets: []
+    budgets: [],
+    activeBudget: " "
 }
 
 const store = createStore(
