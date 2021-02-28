@@ -7,7 +7,7 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
 // Actions
-import { createBudget, updateBudget, deleteBudget, createPdf, copyBudget } from '../../redux/actions';
+import { createBudget, updateBudget, deleteBudget, copyBudget } from '../../redux/actions';
 // Components
 import BudgetButton from './budgetButton';
 import NewBudgetForm from './newBudgetForm';
@@ -31,7 +31,6 @@ const BudgetControls = (props) => {
                 <BudgetButton handleClick={handleShow2} buttonName={'Edit Budget'}/>
                 <BudgetButton handleClick={props.copyBudget} buttonName={'Create Copy'}/>
                 <BudgetButton handleClick={props.deleteBudget} buttonName={'Delete Budget'}/>
-                <BudgetButton handleClick={props.createPdf} buttonName={'Create PDF'}/>
             </Col>
 
             <Modal className="newBudget-modal" show={show} onHide={handleClose}>
@@ -79,9 +78,6 @@ function mapDispatchToProps(dispatch) {
         deleteBudget: () => { 
             dispatch(deleteBudget())
         },
-        createPdf: () => {
-            dispatch(createPdf())
-        },    
         copyBudget: () => {
             dispatch(copyBudget())
         }

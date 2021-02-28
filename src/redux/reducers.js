@@ -7,7 +7,8 @@ import {
     UPDATE_BUDGET,
     DELETE_BUDGET,
     CREATE_BUDGET,
-    COPY_BUDGET
+    COPY_BUDGET,
+    SET_BUDGET
 } from './actions';
 
 export function loginReducer(state=false, action) {
@@ -29,11 +30,14 @@ export function userReducer(state={name: " ", email: " "}, action) {
             return state;
         }
         case FIND_USER: {
-            const userI = {
-                name: action.payload.fakeUser.name,
-                email: action.payload.fakeUser.email
+            const userD = {
+                name: action.payload.userD.name,
+                email: action.payload.userD.email,
+                userToken: action.payload.userD.userToken
             }
-            return userI;
+
+            console.log(userD, 'running reducer')
+            return userD;
         }
         default: 
             return state;
@@ -56,7 +60,6 @@ export function budgetsReducer(state=[], action) {
         case DELETE_BUDGET: {
             return state;
         }
-        // FUNCTION SENDS NEWBUDGET BUT DOESN'T 
         case CREATE_BUDGET: {
             const newBudget = action.payload.newBudget;
             console.log('creating budget', newBudget)
@@ -67,8 +70,21 @@ export function budgetsReducer(state=[], action) {
     }
 }
 
+export function activeBudgetReducer(state=" ", action) {
+    switch(action.type) {
+        case SET_BUDGET: {
+            const activeBudget = JSON.stringify(action.payload.budget);
+            console.log(action.payload.budget)
+            return activeBudget
+        }
+        default: 
+            return state;
+    }
+}
+
 export const rootReducer = combineReducers({
     loggedIn: loginReducer,
     user: userReducer,
-    budgets: budgetsReducer
+    budgets: budgetsReducer,
+    activeBudget: activeBudgetReducer
 })

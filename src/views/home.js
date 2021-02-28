@@ -8,6 +8,7 @@ import Header from '../components/header-components/header';
 import Footer from '../components/footer-components/footer';
 import LoginContainer from '../components/auth/loginContainer';
 import Article from '../components/articleContainer';
+import UserData from '../services/users.services';
 // Actions
 import { findUser, logIn } from '../redux/actions';
 // Bootstrap 
@@ -24,14 +25,17 @@ const HomePage = (props) => {
         firebase
         .auth()
         .signInWithEmailAndPassword(emailValue, passwordValue)
-        // .then((response) => {
-        //     history.push("/mainHub")
-        //     return response
-        // })
         .then((response) => {
+            history.push("/mainHub");
+            return response.user.uid
+        })
+        .then((response) => {
+            return UserData.get(response);
+        })
+        .then((response) => {
+            console.log(response);
             props.logInClick();
-            props.findUser();
-            console.log('User Log in successful, finding saved data', response)
+            props.findUser(response.data);
         })
         .catch(function(error) {
             errorMessageBox.innerHTML = error.message;

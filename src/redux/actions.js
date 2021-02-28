@@ -9,34 +9,14 @@ export const CREATE_BUDGET = 'CREATE_BUDGET';
 export const UPDATE_BUDGET = 'UPDATE_BUDGET';
 export const COPY_BUDGET = 'COPY_BUDGET';
 export const DELETE_BUDGET = 'DELETE_BUDGET';
-export const CREATE_PDF = 'CREATE_PDF';
+// Active Budget Types;
+export const SET_BUDGET = "SET_BUDGET";
 
-const fakeUser = {
-    name: "William Thompson",
-    email: "testmail@mail.com",
-    budgets: [
-        {
-            name: "example",
-            expense: [],
-            income: [],
-            description: "My example budget etc...",
-            lastUpdated: "02/21/2021"
-        },
-        {
-            name: "example2",
-            expense: [],
-            income: [],
-            description: "My 2nd example budget etc...",
-            lastUpdated: "02/21/2021"
-        }
-    ]
-}
-
-export function findUser() {
+export function findUser(userD) {
     return {
         type: FIND_USER,
         payload: {
-            fakeUser
+            userD
         }
     }
 }export function updateUser() {
@@ -76,12 +56,16 @@ export function findUser() {
     return {
         type: DELETE_BUDGET
     }
-}export function createPdf(){
-    return  {
-        type: CREATE_PDF
-    }
 }export function logIn() {
     return {
         type: LOG_IN
+    }
+}export function setBudget(budget) {
+    console.log(budget)
+    return {
+        type: SET_BUDGET,
+        payload: {
+            budget
+        }
     }
 }
