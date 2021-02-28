@@ -1,3 +1,24 @@
+# Budget Tool
+## Full Stack Project - Digitial Crafts - <a href="https://github.com/DigitalCraftsStudents/hyb-fl-08-2020-cohort/blob/main/lectures/week-21/README.md">Requirements</a>
+## <a href="https://github.com/William-Thompson12/Full-Stack-API">API</a>
+## Status: In Progress
+https://budget-tool-dc.netlify.app
+
+**Welcome to ___ your personal budgeting tool**
+
+**Contact Me**
+  Linkedin: 
+  Email:
+
+**Making the Project:**
+
+**Repository Contents**
+
+**Features & How they work:**
+  Profile Functions:
+  
+  Budget Functions:
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
