@@ -3,9 +3,6 @@ class UserData {
   get(id) {
     return http.get(`/users/${id}`);
   }
-  getAll() {
-    return http.get(`/users`);
-  }
   create(data) {
     return http.post("/users", data);
   }

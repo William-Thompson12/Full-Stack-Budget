@@ -30,16 +30,15 @@ const HomePage = (props) => {
             return response.user.uid
         })
         .then((response) => {
-            return UserData.get(response);
+            return UserData.get(response)
         })
         .then((response) => {
-            console.log(response);
             props.logInClick();
-            props.findUser(response.data);
+            props.findUser(response.data[0])
         })
         .catch(function(error) {
             errorMessageBox.innerHTML = error.message;
-            console.log(error.message);
+            console.log(error);
         });
     }
 
@@ -70,7 +69,7 @@ function mapDispatchToProps(dispatch) {
     return {
         // Translate redux dispatch into props
         logInClick: () => { dispatch(logIn()) },
-        findUser: () => { dispatch(findUser()) }
+        findUser: (userD) => { dispatch(findUser(userD)) }
     }
 }
 

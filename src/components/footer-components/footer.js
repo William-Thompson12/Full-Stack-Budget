@@ -15,7 +15,7 @@ class Footer extends React.Component{
 
     render(){
         return (
-            <div className="footer text-center">
+            <Row className="footer text-center">
                 <Col sm={12} md={12} lg={12}>
                     <div className="copyRight">
                         <p>&copy; Bugdet Tool</p>
@@ -25,7 +25,7 @@ class Footer extends React.Component{
                     <a href="https://github.com/William-Thompson12/Full-Stack-Bugdet">GitHub</a>-
                     <a href="www.linkedin.com/in/william-thompson12">Linkedin</a>
                 </Col>
-            </div>
+            </Row>
         )
     }
 }

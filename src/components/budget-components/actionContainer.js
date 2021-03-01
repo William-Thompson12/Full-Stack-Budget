@@ -1,9 +1,8 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState, useEffect} from 'react';
+import { connect } from 'react-redux';
 // CSS
 import '../budget-components/actionContainer.css';
 import '../budget-components/budgetsFolder.css';
-import '../budget-components/budgetBuilder.css';
 // Bootstrap
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
@@ -13,100 +12,34 @@ import Button from 'react-bootstrap/esm/Button';
 import Tooltip from 'react-bootstrap/Tooltip';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 // Components
+import BudgetData from '../../services/budgets.services'
 import BudgetsContainer from './budgetsContainer';
 import BudgetControls from './budgetControls';
 import Budget from './budget';
-
-const budgetInfo = {
-    name: "William Thompson",
-    email: "testmail@mail.com",
-    budgets: [
-        {
-            name: "example",
-            expense: [
-                {
-                    name: 'Monthly Rent',
-                    amount: 300.00,
-                    times: 1
-                }
-            ],
-            income: [
-                {
-                    name: 'Monthly Pay',
-                    amount: 200.00,
-                    times: 2
-                }
-            ],
-            description: "My example budget etc...",
-            lastUpdated: "02/21/2021"
-        },
-        {
-            name: "example2",
-            expense: [
-                {
-                    name: 'Monthly Rent',
-                    amount: 300.00,
-                    times: 1
-                },
-                {
-                    name: 'Monthly Haircut',
-                    amount: 20.00,
-                    times: 1
-                }
-            ],
-            income: [
-                {
-                    name: 'Monthly Pay',
-                    amount: 200.00,
-                    times: 2
-                },
-                {
-                    name: 'Monthly Allowance',
-                    amount: 200.00,
-                    times: 2
-                }
-            ],
-            description: "My 2nd example budget etc...",
-            lastUpdated: "02/21/2021"
-        },
-        {
-            name: "example3",
-            expense: [
-                {
-                    name: 'Monthly Rent',
-                    amount: 300.00,
-                    times: 1
-                },
-                {
-                    name: 'Monthly Cut',
-                    amount: 200.00,
-                    times: 1
-                }
-            ],
-            income: [
-                {
-                    name: 'Monthly Pay',
-                    amount: 200.00,
-                    times: 2
-                },
-                {
-                    name: 'Monthly Pay',
-                    amount: 200.00,
-                    times: 2
-                }
-            ],
-            description: "My 2nd example budget etc...",
-            lastUpdated: "02/21/2021"
-        }
-    ]
-}
+import { findBudgets } from '../../redux/actions';
 
 const ActionContainer = (props) => {
-//     const [activeTab, setActiveTab] = useState(0)
+    const user = props.user;
+    const budgets = props.budgets
+    // const [isLoading, setLoading] = useState(true);
+    // const [budgets, setBudget] = useState();
 
-//     const handleSelect = (selectedTab) => {
-//         setActiveTab(selectedTab);
-//     }
+    // useEffect(() => {
+    //     BudgetData.getAll(user.userToken)
+    //     .then((response) => {
+    //         setBudget(response.data);
+    //         findBudgets(response.data);
+    //         setLoading(false);
+    //     })
+    //     .catch((err) => {
+    //         console.log(err)
+    //     })
+    // });
+
+    // if (isLoading) {
+    //     return <div id="action-Container">Loading...</div>;
+    // }
+
     return (
         <Tab.Container id="action-Container" defaultActiveKey='0'>
             <Row>
@@ -140,8 +73,8 @@ const ActionContainer = (props) => {
                     <Col sm={12} md={11} lg={11}>
                         <Tab.Content>
                             <div className="budget-builder">
-                                {budgetInfo.budgets.map((budget, index) => {
-                                    return <Budget key={index} budget={budget} tabKey={`${index}`}/>
+                                {budgets.map((budget, index) => {
+                                    return <Budget key={index + budget.name} budget={budget} tabKey={`${budget.budgetId}`}/>
                                 })}
                             </div>
                         </Tab.Content>
@@ -152,4 +85,19 @@ const ActionContainer = (props) => {
     );
 }
 
-export default ActionContainer 
+function mapStateToProps(state) {
+    return {
+        user: state.user,
+        budgets: state.budgets
+    }
+}
+function mapDispatchToProps(dispatch) {
+    return {
+        // Translate redux dispatch into props
+        findBudgets: (id) => {
+            dispatch(findBudgets(id))
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ActionContainer);
