@@ -1,7 +1,7 @@
 import http from "../http-common"
 class BudgetData {
-  getAll(data) {
-    return http.get("/budgets", data);
+  getAll(id) {
+    return http.get(`/budgets/${id}`);
   }
   create(data) {
     return http.post("/budgets", data);

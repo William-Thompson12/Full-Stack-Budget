@@ -8,8 +8,11 @@ import {
     DELETE_BUDGET,
     CREATE_BUDGET,
     COPY_BUDGET,
-    SET_BUDGET
+    SET_BUDGET,
+    FIND_BUDGET
 } from './actions';
+import UserData from '../services/users.services';
+import BudgetData from '../services/budgets.services';
 
 export function loginReducer(state=false, action) {
     switch(action.type) {
@@ -21,22 +24,23 @@ export function loginReducer(state=false, action) {
     }
 }
 
-export function userReducer(state={name: " ", email: " "}, action) {
+export function userReducer(state={name: " ", email: " ", userToken: " "}, action) {
     switch(action.type) {
         case UPDATE_USER: {
-            return state;
+            const userI ={
+                ...action.payload.userI
+            }
+            UserData.update(action.payload.id, userI);
+            return {...state, ...userI};
         }
         case DELETE_USER: {
+            UserData.delete(action.payload.id)
             return state;
         }
         case FIND_USER: {
             const userD = {
-                name: action.payload.userD.name,
-                email: action.payload.userD.email,
-                userToken: action.payload.userD.userToken
+                ...action.payload.userD
             }
-
-            console.log(userD, 'running reducer')
             return userD;
         }
         default: 
@@ -46,24 +50,25 @@ export function userReducer(state={name: " ", email: " "}, action) {
 
 export function budgetsReducer(state=[], action) {
     switch(action.type) {
-        case FIND_USER: {
-            const userI = action.payload.fakeUser.budgets;
-            return userI;
+        case FIND_BUDGET: {
+            const userd = action.payload.userD;
+            return userd;
         }
         case UPDATE_BUDGET: {
+            const id = action.payload.id;
+            const data = action.payload.budgetInfo;
+            BudgetData.update(id, data);
             return state;
         }
-        case COPY_BUDGET: {
-            const copy = action.payload.budget;
-            return [...state, copy];
-        }
         case DELETE_BUDGET: {
+            const id = action.payload.id;
+            BudgetData.delete(id);
             return state;
         }
         case CREATE_BUDGET: {
             const newBudget = action.payload.newBudget;
-            console.log('creating budget', newBudget)
-            return [newBudget];
+            BudgetData.create(newBudget);
+            return [...state, newBudget];
         }
         default: 
             return state;
@@ -74,8 +79,8 @@ export function activeBudgetReducer(state=" ", action) {
     switch(action.type) {
         case SET_BUDGET: {
             const activeBudget = JSON.stringify(action.payload.budget);
-            console.log(action.payload.budget)
-            return activeBudget
+            console.log(action.payload.budget);
+            return activeBudget;
         }
         default: 
             return state;

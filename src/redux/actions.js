@@ -9,6 +9,7 @@ export const CREATE_BUDGET = 'CREATE_BUDGET';
 export const UPDATE_BUDGET = 'UPDATE_BUDGET';
 export const COPY_BUDGET = 'COPY_BUDGET';
 export const DELETE_BUDGET = 'DELETE_BUDGET';
+export const FIND_BUDGET = 'FIND_BUDGET';
 // Active Budget Types;
 export const SET_BUDGET = "SET_BUDGET";
 
@@ -19,38 +20,43 @@ export function findUser(userD) {
             userD
         }
     }
-}export function updateUser() {
+}export function updateUser(id, userI) {
+    console.log(id, userI, 'running action')
     return {
-        type: UPDATE_USER
+        type: UPDATE_USER,
+        payload: {
+            id,
+            userI
+        }
     }
-}export function deleteUser() {
+}export function deleteUser(id) {
     return {
-        type: DELETE_USER
+        type: DELETE_USER,
+        payload: {
+            id
+        }
     }
-}export function createBudget() {
-    const budgetName = document.getElementById('budget-name').value;
-    const budgetDescription = document.getElementById('budget-description').value;
-    const newBudget = {
-        name: budgetName,
-        expense: [],
-        income: [],
-        description: budgetDescription,
-        lastUpdated: new Date() 
+}export function findBudgets(userD) {
+    return {
+        type: FIND_BUDGET,
+        payload: {
+            userD
+        }
     }
-    console.log('creating budget', newBudget)
+}export function createBudget(newBudget) {
     return {
         type: CREATE_BUDGET,
         payload: {
             newBudget
         }
     }
-}export function updateBudget() {
+}export function updateBudget(id, budgetInfo) {
     return {
-        type: UPDATE_BUDGET
-    }
-}export function copyBudget() {
-    return {
-        type: COPY_BUDGET
+        type: UPDATE_BUDGET,
+        payload: {
+            id,
+            budgetInfo
+        }
     }
 }export function deleteBudget() {
     return {
@@ -61,7 +67,6 @@ export function findUser(userD) {
         type: LOG_IN
     }
 }export function setBudget(budget) {
-    console.log(budget)
     return {
         type: SET_BUDGET,
         payload: {
