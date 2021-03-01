@@ -1,9 +1,9 @@
 import React from 'react';
+import { useState } from 'react';
 import CanvasJSReact from "../canvasjs-3.2.9/canvasjs.react"
 import { connect } from 'react-redux';
 // CSS
 import './budget.css';
-import { useState } from 'react';
 // Bootstrap
 import Modal from 'react-bootstrap/Modal';
 import Tab from 'react-bootstrap/Tab';
@@ -17,9 +17,10 @@ import Table from 'react-bootstrap/Table';
 // Components
 import Income from './incomeContainer';
 import Expense from './expenseContainer';
-import BudgetCalculations from './budgetCalculations';
+// Actions
+import { updateBudget } from '../../redux/actions';
+import { findAllPos, findAllNeg, monthlyBudgetSaving, costRatioData, percentage} from './budgetCalculations';
 // Charts
-var CanvasJS = CanvasJSReact.CanvasJS;
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 const Budget = (props) => {
@@ -35,6 +36,12 @@ const Budget = (props) => {
     const handleClose2 = () => setShow2(false);
     // end modal2
 
+    const costRatioCalc = costRatioData(budget);
+    const positiveBudgets = findAllPos(budget);
+    const negativeBudgets = findAllNeg(budget);
+    const monthlyBudget = monthlyBudgetSaving(budget);
+    const percentageCalc = percentage(budget);
+
     const expenseOptions = {
         animationEnabled: true,
         exportEnabled: true,
@@ -44,13 +51,9 @@ const Budget = (props) => {
         },
         data: [{
             type: "pie",
-            indexLabel: "{label}: {y}%",		
+            indexLabel: "{label}: {y}$",		
             startAngle: -90,
-            dataPoints: [
-                { y: 20, label: "Airfare" },
-                { y: 24, label: "Food & Drinks" },
-                { y: 20, label: "Accomodation" }
-            ]
+            dataPoints: negativeBudgets
         }]
     }
 
@@ -63,13 +66,9 @@ const Budget = (props) => {
         },
         data: [{
             type: "pie",
-            indexLabel: "{label}: {y}%",		
+            indexLabel: "{label}: {y}$",		
             startAngle: -90,
-            dataPoints: [
-                { y: 20, label: "Airfare" },
-                { y: 24, label: "Food & Drinks" },
-                { y: 20, label: "Accomodation" }
-            ]
+            dataPoints: positiveBudgets
         }]
     }
     
@@ -99,39 +98,13 @@ const Budget = (props) => {
             showInLegend: true,
             xValueFormatString: "MMMM YYYY",
             yValueFormatString: "$#,##0",
-            dataPoints: [
-                { x: new Date(2017, 0), y: 27500 },
-                { x: new Date(2017, 1), y: 29000 },
-                { x: new Date(2017, 2), y: 32000 },
-                { x: new Date(2017, 3), y: 36500 },
-                { x: new Date(2017, 4), y: 43000 },
-                { x: new Date(2017, 5), y: 47000 },
-                { x: new Date(2017, 6), y: 52000 },
-                { x: new Date(2017, 7), y: 57500 },
-                { x: new Date(2017, 8), y: 59500 },
-                { x: new Date(2017, 9), y: 63000 },
-                { x: new Date(2017, 10), y: 65000 },
-                { x: new Date(2017, 11), y: 69500 }
-            ]
+            dataPoints: monthlyBudget.income
         },{
             type: "line",
             name: "Expected Expenses",
             showInLegend: true,
             yValueFormatString: "$#,##0",
-            dataPoints: [
-                { x: new Date(2017, 0), y: 38000 },
-                { x: new Date(2017, 1), y: 39000 },
-                { x: new Date(2017, 2), y: 35000 },
-                { x: new Date(2017, 3), y: 37000 },
-                { x: new Date(2017, 4), y: 42000 },
-                { x: new Date(2017, 5), y: 48000 },
-                { x: new Date(2017, 6), y: 51000 },
-                { x: new Date(2017, 7), y: 58000 },
-                { x: new Date(2017, 8), y: 62000 },
-                { x: new Date(2017, 9), y: 65000 },
-                { x: new Date(2017, 10), y: 68000 },
-                { x: new Date(2017, 11), y: 67000 }
-            ]
+            dataPoints: monthlyBudgetSaving.expense
         },{
             type: "area",
             name: "Savings",
@@ -139,30 +112,17 @@ const Budget = (props) => {
             markerBorderThickness: 2,
             showInLegend: true,
             yValueFormatString: "$#,##0",
-            dataPoints: [
-                { x: new Date(2017, 0), y: 11500 },
-                { x: new Date(2017, 1), y: 10500 },
-                { x: new Date(2017, 2), y: 9000 },
-                { x: new Date(2017, 3), y: 13500 },
-                { x: new Date(2017, 4), y: 13890 },
-                { x: new Date(2017, 5), y: 18500 },
-                { x: new Date(2017, 6), y: 16000 },
-                { x: new Date(2017, 7), y: 14500 },
-                { x: new Date(2017, 8), y: 15880 },
-                { x: new Date(2017, 9), y: 24000 },
-                { x: new Date(2017, 10), y: 31000 },
-                { x: new Date(2017, 11), y: 19000 }
-            ]
+            dataPoints: monthlyBudgetSaving.savings
         }]
     }
 
     const costRatio = {
         animationEnabled: true,
         title: {
-            text: "Percentage of Income Saved"
+            text: "Percentage of Income Spent"
         },
         subtitles: [{
-            text: "24% Spent",
+            text: `%${percentageCalc} Spent`,
             verticalAlign: "center",
             fontSize: 24,
             dockInsidePlotArea: true
@@ -171,11 +131,8 @@ const Budget = (props) => {
             type: "doughnut",
             showInLegend: true,
             indexLabel: "{name}: {y}",
-            yValueFormatString: "#,###'%'",
-            dataPoints: [
-                { name: "Incomes", y: 76 },
-                { name: "Expenses", y: 24 }
-            ]
+            yValueFormatString: "$#,##0",
+            dataPoints: costRatioCalc
         }]
     }
 
@@ -340,6 +297,9 @@ function mapStateToProps(state) {
 }
 function mapDispatchToProps(dispatch) {
     return {
+        updateBudget: (id, data) => { 
+            dispatch(updateBudget(id, data))
+        }
     }
 }
 

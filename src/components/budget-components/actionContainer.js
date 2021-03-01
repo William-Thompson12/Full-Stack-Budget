@@ -19,8 +19,9 @@ import Budget from './budget';
 import { findBudgets } from '../../redux/actions';
 
 const ActionContainer = (props) => {
-    const user = props.user;
+    // const user = props.user;
     const budgets = props.budgets
+    //LOAD BUDGET DATA
     // const [isLoading, setLoading] = useState(true);
     // const [budgets, setBudget] = useState();
 

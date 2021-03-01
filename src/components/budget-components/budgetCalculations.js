@@ -1,93 +1,70 @@
-import { connect } from 'react-redux';
-
-const BudgetCalculations = (props) => {
-    const budget = props.budget
-    function findNet() {
-        const net = totalPos() - totalNeg();
-        return net;
-    }
-    function costRatio() {
-        const newCostRatio = [
-            {name: "Incomes", y:totalPos()}, 
-            {name: "Expenses", y:totalNeg()}
-        ]
-        return newCostRatio
-    }
-    function totalPos() {
-        let totalPos = 0
-        findAllPos().forEach(element => {
-            totalPos += element.amount 
-        });
-        return totalPos;
-    }
-    function totalNeg() {
-        let totalNeg = 0
-        findAllNeg().forEach(element => {
-            totalNeg += element.amount 
-        });
-        return totalNeg;
-    }
-    function findAllPos() {
-        const positiveBudgets = budget.income.map((dataPoint) => {
-            return {y:(dataPoint.amount * dataPoint.times), label: dataPoint.name};
-        });
-        return positiveBudgets;
-    }
-    function findAllNeg() {
-        const negativeBudget = budget.expense.map((dataPoint) => {
-            return {y:(dataPoint.amount * dataPoint.times), label: dataPoint.name};
-        });
-        return negativeBudget;
-    }
-    function monthlyBudgetSaving() {
-        const savings = costRatio();
-        const Pos = totalPos();
-        const Neg = totalPos();
-        let monthlyBudget = {
-            savings: [],
-            expense: [],
-            income: []
-        };
-        for(let i = 0; i < 12; i++) {
-            monthlyBudget.savings.push(
-                {
-                    x: new Date(2021, i), 
-                    y:(savings * (i + 1))
-                })
-            monthlyBudget.expense.push(
-                {   
-                    x: new Date(2021, i), 
-                    y:(Neg * (i + 1))
-                })
-            monthlyBudget.income.push(
-                {
-                    x: new Date(2021, i), 
-                    y:(Pos * (i + 1))
-                })
-        }
-        return monthlyBudget
-    }
-    const endCalculations = {
-        net: findNet(),
-        costRatio: costRatio(),
-        positiveBudgets: findAllPos(),
-        negativeBudget: findAllNeg(),
-        monthlyBudget: monthlyBudgetSaving()
-    }
-    return(endCalculations)
+export async function findNet(budget) {
+    const net = await totalPos(budget) - totalNeg(budget);
+    return net;
 }
-
-function mapStateToProps(state) {
-    return {
-        loggedIn: state.loggedIn,
-        user: state.user,
-        budgets: state.budgets,
-        activeBudget: state.activeBudget
-        }
+export async function costRatioData(budget) {
+    const newCostRatio = [
+        {name: "Incomes", y: await totalPos(budget)}, 
+        {name: "Expenses", y: await totalNeg(budget)}
+    ]
+    return newCostRatio
 }
-function mapDispatchToProps(dispatch) {
-    return {
+export async function percentage(budget) {
+    const num = await totalPos(budget);
+    const negNum = await totalNeg(budget);
+  return (negNum/num)*100;
+}
+export async function totalPos(budget) {
+    let totalPos = 0
+    await findAllPos(budget).forEach(element => {
+        totalPos += element.amount 
+    });
+    return totalPos;
+}
+export async function totalNeg(budget) {
+    let totalNeg = 0
+    await findAllNeg(budget).forEach(element => {
+        totalNeg += element.amount 
+    });
+    return totalNeg;
+}
+export async function findAllPos(budget) {
+    const positiveBudgets = await budget.income.map((dataPoint) => {
+        return {y:(dataPoint.amount * dataPoint.times), label: dataPoint.name};
+    });
+    return positiveBudgets;
+}
+export async function findAllNeg(budget) {
+    const negativeBudget = await budget.expense.map((dataPoint) => {
+        return {y:(dataPoint.amount * dataPoint.times), label: dataPoint.name};
+    });
+    return negativeBudget;
+}
+export async function monthlyBudgetSaving(budget) {
+    const savings = await costRatioData(budget);
+    const Pos = await totalPos(budget);
+    const Neg = await totalPos(budget);
+    let monthlyBudget = {
+        savings: [],
+        expense: [],
+        income: []
+    };
+    for(let i = 0; i < 12; i++) {
+        monthlyBudget.savings.push(
+            {
+                x: new Date(2021, i), 
+                y:(savings * (i + 1))
+            })
+        monthlyBudget.expense.push(
+            {   
+                x: new Date(2021, i), 
+                y:(Neg * (i + 1))
+            })
+        monthlyBudget.income.push(
+            {
+                x: new Date(2021, i), 
+                y:(Pos * (i + 1))
+            })
     }
+    return monthlyBudget
 }
-
-export default connect(mapStateToProps, mapDispatchToProps)(BudgetCalculations);
