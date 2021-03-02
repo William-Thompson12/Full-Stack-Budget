@@ -21,7 +21,6 @@ export function findUser(userD) {
         }
     }
 }export function updateUser(id, userI) {
-    console.log(id, userI, 'running action')
     return {
         type: UPDATE_USER,
         payload: {

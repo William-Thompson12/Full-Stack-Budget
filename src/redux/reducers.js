@@ -7,7 +7,6 @@ import {
     UPDATE_BUDGET,
     DELETE_BUDGET,
     CREATE_BUDGET,
-    COPY_BUDGET,
     SET_BUDGET,
     FIND_BUDGET
 } from './actions';
@@ -17,6 +16,7 @@ import BudgetData from '../services/budgets.services';
 export function loginReducer(state=false, action) {
     switch(action.type) {
         case LOG_IN: {
+            console.log('returning true')
             return true;
         }
         default:
@@ -51,8 +51,8 @@ export function userReducer(state={name: " ", email: " ", userToken: " "}, actio
 export function budgetsReducer(state=[], action) {
     switch(action.type) {
         case FIND_BUDGET: {
-            const userd = action.payload.userD;
-            return userd;
+            const userD = action.payload.userD;
+            return [...userD];
         }
         case UPDATE_BUDGET: {
             const id = action.payload.id;
@@ -75,11 +75,11 @@ export function budgetsReducer(state=[], action) {
     }
 }
 
-export function activeBudgetReducer(state=" ", action) {
+export function activeBudgetReducer(state="", action) {
     switch(action.type) {
         case SET_BUDGET: {
-            const activeBudget = JSON.stringify(action.payload.budget);
-            console.log(action.payload.budget);
+            const activeBudget = action.payload.budget;
+            console.log(activeBudget);
             return activeBudget;
         }
         default: 

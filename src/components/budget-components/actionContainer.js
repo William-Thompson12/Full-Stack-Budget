@@ -1,4 +1,4 @@
-import React, { useState, useEffect} from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 // CSS
 import '../budget-components/actionContainer.css';
@@ -12,37 +12,15 @@ import Button from 'react-bootstrap/esm/Button';
 import Tooltip from 'react-bootstrap/Tooltip';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 // Components
-import BudgetData from '../../services/budgets.services'
 import BudgetsContainer from './budgetsContainer';
 import BudgetControls from './budgetControls';
 import Budget from './budget';
-import { findBudgets } from '../../redux/actions';
+
 
 const ActionContainer = (props) => {
-    // const user = props.user;
-    const budgets = props.budgets
-    //LOAD BUDGET DATA
-    // const [isLoading, setLoading] = useState(true);
-    // const [budgets, setBudget] = useState();
-
-    // useEffect(() => {
-    //     BudgetData.getAll(user.userToken)
-    //     .then((response) => {
-    //         setBudget(response.data);
-    //         findBudgets(response.data);
-    //         setLoading(false);
-    //     })
-    //     .catch((err) => {
-    //         console.log(err)
-    //     })
-    // });
-
-    // if (isLoading) {
-    //     return <div id="action-Container">Loading...</div>;
-    // }
 
     return (
-        <Tab.Container id="action-Container" defaultActiveKey='0'>
+        <Tab.Container id="action-Container" defaultActiveKey={0}>
             <Row>
                 <Col sm={12} md={3} lg={3}>
                     <Col className="budgets-folder" sm={{ span: 12, offset: 0 }} md={{ span: 12, offset: 0 }} lg={{ span: 11, offset: 1 }}>
@@ -74,8 +52,8 @@ const ActionContainer = (props) => {
                     <Col sm={12} md={11} lg={11}>
                         <Tab.Content>
                             <div className="budget-builder">
-                                {budgets.map((budget, index) => {
-                                    return <Budget key={index + budget.name} budget={budget} tabKey={`${budget.budgetId}`}/>
+                                {props.budgets.map((budget, index) => {
+                                    return <Budget index={index} key={index + budget.name} budget={budget} tabKey={`${budget.budgetId}`}/>
                                 })}
                             </div>
                         </Tab.Content>
@@ -88,16 +66,10 @@ const ActionContainer = (props) => {
 
 function mapStateToProps(state) {
     return {
-        user: state.user,
-        budgets: state.budgets
     }
 }
 function mapDispatchToProps(dispatch) {
     return {
-        // Translate redux dispatch into props
-        findBudgets: (id) => {
-            dispatch(findBudgets(id))
-        }
     }
 }
 

@@ -18,13 +18,12 @@ import Table from 'react-bootstrap/Table';
 import Income from './incomeContainer';
 import Expense from './expenseContainer';
 // Actions
-import { updateBudget } from '../../redux/actions';
+import { updateBudget, setBudget } from '../../redux/actions';
 import { findAllPos, findAllNeg, monthlyBudgetSaving, costRatioData, percentage} from './budgetCalculations';
 // Charts
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 const Budget = (props) => {
-    const budget = props.budget
     // modal
     const [show, setShow] = useState(false);
     const handleShow = () => setShow(true);
@@ -36,19 +35,25 @@ const Budget = (props) => {
     const handleClose2 = () => setShow2(false);
     // end modal2
 
-    const costRatioCalc = costRatioData(budget);
-    const positiveBudgets = findAllPos(budget);
-    const negativeBudgets = findAllNeg(budget);
-    const monthlyBudget = monthlyBudgetSaving(budget);
-    const percentageCalc = percentage(budget);
+    const costRatioCalc = costRatioData(props.budget);
+    const positiveBudgets = findAllPos(props.budget);
+    const negativeBudgets = findAllNeg(props.budget);
+    const monthlyBudget = monthlyBudgetSaving(props.budget);
+    const percentageCalc = percentage(props.budget);
+    console.log( 
+     props.budget,
+     costRatioCalc,
+     positiveBudgets,
+     negativeBudgets,
+     monthlyBudget,
+     percentageCalc
+    )
 
     const expenseOptions = {
         animationEnabled: true,
         exportEnabled: true,
         theme: "light1", 
-        title:{
-            text: "Breakdown Expenses"
-        },
+        title:{ text: "Breakdown Expenses" },
         data: [{
             type: "pie",
             indexLabel: "{label}: {y}$",		
@@ -56,14 +61,11 @@ const Budget = (props) => {
             dataPoints: negativeBudgets
         }]
     }
-
     const incomeOptions = {
         animationEnabled: true,
         exportEnabled: true,
         theme: "light1",
-        title:{
-            text: "Breakdown Income"
-        },
+        title:{ text: "Breakdown Income" },
         data: [{
             type: "pie",
             indexLabel: "{label}: {y}$",		
@@ -71,27 +73,15 @@ const Budget = (props) => {
             dataPoints: positiveBudgets
         }]
     }
-    
     const projectedIncome = {
         animationEnabled: true,
         exportEnabled: true,
         colorSet: "colorSet1",
-        title: {
-            text: "Monthly Projected"
-        },
-        axisX: {
-            valueFormatString: "MMMM"
-        },
-        axisY: {
-            prefix: "$"
-        },
-        toolTip: {
-            shared: true
-        },
-        legend: {
-            cursor: "pointer",
-            verticalAlign: "top"
-        },
+        title: { text: "Monthly Projected" },
+        axisX: { valueFormatString: "MMMM" },
+        axisY: { prefix: "$" },
+        toolTip: { shared: true },
+        legend: { cursor: "pointer", verticalAlign: "top" },
         data: [{
             type: "column",
             name: "Expected Income",
@@ -115,12 +105,9 @@ const Budget = (props) => {
             dataPoints: monthlyBudgetSaving.savings
         }]
     }
-
     const costRatio = {
         animationEnabled: true,
-        title: {
-            text: "Percentage of Income Spent"
-        },
+        title: { text: "Percentage of Income Spent"},
         subtitles: [{
             text: `%${percentageCalc} Spent`,
             verticalAlign: "center",
@@ -136,20 +123,52 @@ const Budget = (props) => {
         }]
     }
 
+    // function createNewIncome() {
+    //     const updatedBudget = [...props.budget.income]
+    //     const incomeName = document.getElementById('incomeName').value;
+    //     const incomeAmount = document.getElementById('incomeAincomeAmount').value;
+    //     const incomeTimes = document.getElementById('incomeTimes').value;
+    //     const id = props.activeBudget
+    //     const newIncome = {
+    //         name: incomeName,
+    //         amount: incomeAmount,
+    //         times: incomeTimes
+    //     }
+    //     updatedBudget.income = [newIncome]
+    //     updateBudget(id, updatedBudget);
+    // }
+    // function createNewExpense() {
+    //     const updatedBudget = [...props.budget.expense]
+    //     const expenseName = document.getElementById('expenseName').value;
+    //     const expenseAmount = document.getElementById('expenseAincomeAmount').value;
+    //     const expenseTimes = document.getElementById('expenseTimes').value;
+    //     const id = props.activeBudget
+    //     const newExpense = {
+    //         id: 
+    //         name: expenseName,
+    //         amount: expenseAmount,
+    //         times: expenseTimes
+    //     }
+    //     updatedBudget.expense = [newExpense]
+    //     updateBudget(id, updatedBudget);
+    // }
+    // function deleteCurrentBudget() {
+    //     const id = props.activeBudget
+    //     deleteBudget(id);
+    // }
+
     return (
         <>
-        {console.log(budget)}
-        {/*budget container */}
             <Tab.Pane eventKey={props.tabKey} className="budget">
                 <Row>
-                    <h1>{budget.name}</h1>
+                    <h1>{props.budget.name}</h1>
                 </Row>
                 <Row>
                     <Col sm={{ span: 6, offset: 0 }} md={{ span: 4, offset: 0 }} lg={{ span: 4, offset: 0 }}>
-                        <p>{budget.description}</p>
+                        <p>{props.budget.description}</p>
                     </Col>
                     <Col sm={{ span: 2, offset: 2 }} md={{ span: 2, offset: 6 }} lg={{ span: 2, offset: 6 }}>
-                        <p>Last Edit: {budget.updatedAt}</p>
+                        <p>Last Edit: {props.budget.updatedAt}</p>
                     </Col>
                 </Row>
                 <Row  className="graph-container">
@@ -205,7 +224,7 @@ const Budget = (props) => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                {budget.income.map((income,index) => {
+                                {props.budget.income.map((income,index) => {
                                     return <Income key={index} incomeData={income} index={index}/>
                                 })}
                                 </tbody>
@@ -232,7 +251,7 @@ const Budget = (props) => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                {budget.expense.map((expense,index)=> {
+                                {props.budget.expense.map((expense,index)=> {
                                     return <Expense key={index} expenseData={expense} index={index}/>
                                 })}
                                 </tbody>
@@ -247,7 +266,24 @@ const Budget = (props) => {
                 <Modal.Header closeButton>
                     Enter Income Information Below
                 </Modal.Header>
-                {/* New Income Form */}
+                    <Form controlid="income-form">
+                        <Form.Group>
+                            <Row>
+                                <Col sm={{ span: 12, offset: 0 }} md={{ span: 12, offset: 0 }} lg={{ span: 3, offset: 0 }}>
+                                    <Form.Label>Name</Form.Label>
+                                    <Form.Control id="incomeName" autoComplete="off" type="text" placeholder="Enter email" />
+                                </Col>
+                                <Col sm={{ span: 12, offset: 0 }} md={{ span: 12, offset: 0 }} lg={{ span: 3, offset: 0 }}>
+                                    <Form.Label>Amount</Form.Label>
+                                    <Form.Control autoComplete="off" id="incomeAmount" type="text" placeholder="20.00" />
+                                </Col>
+                                <Col sm={{ span: 12, offset: 0 }} md={{ span: 12, offset: 0 }} lg={{ span: 3, offset: 0 }}>
+                                    <Form.Label>Times Per Month</Form.Label>
+                                    <Form.Control id="perMonth" autoComplete="on" type="" placeholder="3" />
+                                </Col>
+                            </Row>
+                        </Form.Group>
+                    </Form>
                 <Modal.Footer>
                     <Row>
                         <Button variant="secondary" onClick={null}>Create New Income</Button>
@@ -291,7 +327,6 @@ function mapStateToProps(state) {
     return {
         loggedIn: state.loggedIn,
         user: state.user,
-        budgets: state.budgets,
         activeBudget: state.activeBudget
         }
 }
@@ -299,6 +334,9 @@ function mapDispatchToProps(dispatch) {
     return {
         updateBudget: (id, data) => { 
             dispatch(updateBudget(id, data))
+        },
+        setBudget: (budget) => {
+            dispatch(setBudget(budget))
         }
     }
 }

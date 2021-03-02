@@ -16,14 +16,16 @@ export async function percentage(budget) {
 }
 export async function totalPos(budget) {
     let totalPos = 0
-    await findAllPos(budget).forEach(element => {
+    const allPos = await findAllPos(budget)
+    await allPos.forEach(element => {
         totalPos += element.amount 
     });
     return totalPos;
 }
 export async function totalNeg(budget) {
     let totalNeg = 0
-    await findAllNeg(budget).forEach(element => {
+    const allNeg = await findAllNeg(budget)
+    await allNeg.forEach(element => {
         totalNeg += element.amount 
     });
     return totalNeg;

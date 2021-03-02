@@ -1,6 +1,7 @@
 import React from 'react';
 import firebase from "../firebase";
 import { connect } from 'react-redux';
+import Cookies from 'js-cookie';
 // CSS
 import '../views/home.css';
 // Components
@@ -8,9 +9,8 @@ import Header from '../components/header-components/header';
 import Footer from '../components/footer-components/footer';
 import LoginContainer from '../components/auth/loginContainer';
 import Article from '../components/articleContainer';
-import UserData from '../services/users.services';
 // Actions
-import { findUser, logIn } from '../redux/actions';
+import { logIn } from '../redux/actions';
 // Bootstrap 
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row'
@@ -26,22 +26,17 @@ const HomePage = (props) => {
         .auth()
         .signInWithEmailAndPassword(emailValue, passwordValue)
         .then((response) => {
+            Cookies.set('userToken', response.user.uid)
+            props.logInClick()
+        })
+        .then(() => {
             history.push("/mainHub");
-            return response.user.uid
-        })
-        .then((response) => {
-            return UserData.get(response)
-        })
-        .then((response) => {
-            props.logInClick();
-            props.findUser(response.data[0])
         })
         .catch(function(error) {
             errorMessageBox.innerHTML = error.message;
             console.log(error);
         });
     }
-
     return (
         <div className="page">
             <Header/>
@@ -62,14 +57,15 @@ const HomePage = (props) => {
 
 function mapStateToProps(state) {
     return {
-        loggedIn: state.loggedIn
+        loggedIn: state.loggedIn,
+        user: state.user,
+        budgets: state.budgets
     }
 }
 function mapDispatchToProps(dispatch) {
     return {
         // Translate redux dispatch into props
-        logInClick: () => { dispatch(logIn()) },
-        findUser: (userD) => { dispatch(findUser(userD)) }
+        logInClick: () => { dispatch(logIn()) }
     }
 }
 

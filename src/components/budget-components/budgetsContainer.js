@@ -14,7 +14,6 @@ import NewBudgetForm from './newBudgetForm';
 import { createBudget, setBudget } from '../../redux/actions';
 
 const BudgetsContainer = (props) => {
-    const user = props.user
     const budgets = props.budgets
     // modal
     const [show, setShow] = useState(false);
@@ -38,7 +37,7 @@ const BudgetsContainer = (props) => {
     return (
         <>
         <Nav variant="pills" className="budgets-container">
-            {budgets.length === 0 ? defaultRender() : budgets.map((budget,index) => { return( <RenderedBudgets handleClick={setBudget} budgetName={budget.name} budgetId={budget.budgetId} budgetDate={budget.updatedAt} budgetDescription={budget.description}/>)})}
+            {budgets.length === 0 ? defaultRender() : budgets.map((budget, index) => { return( <RenderedBudgets key={budget.name + index} handleClick={props.setBudget} budgetName={budget.name} budgetId={budget.budgetId} budgetDate={budget.updatedAt} budgetDescription={budget.description}/>)})}
         </Nav>
         {/* Modal */}
         <Modal className="newBudget-modal" show={show} onHide={handleClose}>
