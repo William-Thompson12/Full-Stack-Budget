@@ -1,6 +1,6 @@
 .page {
     width: 100vw;
-    height: 100vh;
+    height: 100%;
 }
 .main {
     width: 100vw;
@@ -8,4 +8,8 @@
 }
 .article-container {
     text-align: right;
+}
+.main-container {
+    display: flex;
+    justify-content: center;
 }

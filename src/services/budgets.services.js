@@ -4,10 +4,11 @@ class BudgetData {
     return http.get(`/budgets/${id}`);
   }
   create(data) {
+    console.log(data, 'running start')
     return http.post("/budgets", data);
   }
-  update(data) {
-    return http.put(`/budgets`, data);
+  update(id, data) {
+    return http.put(`/budgets/${id}`, data);
   }
   delete(data) {
     return http.delete(`/budgets`, data);

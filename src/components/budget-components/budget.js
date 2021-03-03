@@ -1,137 +1,103 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import CanvasJSReact from "../canvasjs-3.2.9/canvasjs.react"
 import { connect } from 'react-redux';
 // CSS
 import './budget.css';
-import { useState } from 'react';
 // Bootstrap
 import Modal from 'react-bootstrap/Modal';
 import Tab from 'react-bootstrap/Tab';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
-import Tooltip from 'react-bootstrap/Tooltip';
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Form from 'react-bootstrap/Form';
 import Table from 'react-bootstrap/Table';
 // Components
 import Income from './incomeContainer';
 import Expense from './expenseContainer';
-import BudgetCalculations from './budgetCalculations';
+import TransactionData from '../../services/transactions.services';
+// Actions
+import { updateBudget, setBudget, createTransaction, findTransaction } from '../../redux/actions';
+import { findAllPos, findAllNeg, monthlyBudgetSaving, costRatioData, percentage} from './budgetCalculations';
 // Charts
-var CanvasJS = CanvasJSReact.CanvasJS;
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 const Budget = (props) => {
-    const budget = props.budget
     // modal
     const [show, setShow] = useState(false);
     const handleShow = () => setShow(true);
     const handleClose = () => setShow(false);
     // end modal
-    // modal2
-    const [show2, setShow2] = useState(false);
-    const handleShow2 = () => setShow2(true);
-    const handleClose2 = () => setShow2(false);
-    // end modal2
+    const [transactionData, setTransactionData] = useState([{name:'', budgetId: '', amount:0, times:0, transactionId:'', type:''}])
+
+    function findTransactionData() { 
+        TransactionData.getAll(props.budget.budgetId)
+        .then((response) => {
+        props.findTransaction(response.data);
+        setTransactionData(response.data);
+        })
+    }
+    
+
+    useEffect(() => {
+        findTransactionData();
+    }, []);
+
+    // const transactions = props.transactions.forEach(transaction => {
+    //     if (transaction.budgetId === props.budget.budgetId) {
+    //         return transaction
+    //     } else {
+    //         return 
+    //     }
+    // });
+
+    console.log(transactionData)
 
     const expenseOptions = {
         animationEnabled: true,
         exportEnabled: true,
         theme: "light1", 
-        title:{
-            text: "Breakdown Expenses"
-        },
+        title:{ text: "Breakdown Expenses" },
         data: [{
             type: "pie",
-            indexLabel: "{label}: {y}%",		
+            indexLabel: "{label}: {y}$",		
             startAngle: -90,
-            dataPoints: [
-                { y: 20, label: "Airfare" },
-                { y: 24, label: "Food & Drinks" },
-                { y: 20, label: "Accomodation" }
-            ]
+            dataPoints: []
         }]
     }
-
     const incomeOptions = {
         animationEnabled: true,
         exportEnabled: true,
         theme: "light1",
-        title:{
-            text: "Breakdown Income"
-        },
+        title:{ text: "Breakdown Income" },
         data: [{
             type: "pie",
-            indexLabel: "{label}: {y}%",		
+            indexLabel: "{label}: {y}$",		
             startAngle: -90,
-            dataPoints: [
-                { y: 20, label: "Airfare" },
-                { y: 24, label: "Food & Drinks" },
-                { y: 20, label: "Accomodation" }
-            ]
+            dataPoints: []
         }]
     }
-    
     const projectedIncome = {
         animationEnabled: true,
         exportEnabled: true,
         colorSet: "colorSet1",
-        title: {
-            text: "Monthly Projected"
-        },
-        axisX: {
-            valueFormatString: "MMMM"
-        },
-        axisY: {
-            prefix: "$"
-        },
-        toolTip: {
-            shared: true
-        },
-        legend: {
-            cursor: "pointer",
-            verticalAlign: "top"
-        },
+        title: { text: "Monthly Projected" },
+        axisX: { valueFormatString: "MMMM" },
+        axisY: { prefix: "$" },
+        toolTip: { shared: true },
+        legend: { cursor: "pointer", verticalAlign: "top" },
         data: [{
             type: "column",
             name: "Expected Income",
             showInLegend: true,
             xValueFormatString: "MMMM YYYY",
             yValueFormatString: "$#,##0",
-            dataPoints: [
-                { x: new Date(2017, 0), y: 27500 },
-                { x: new Date(2017, 1), y: 29000 },
-                { x: new Date(2017, 2), y: 32000 },
-                { x: new Date(2017, 3), y: 36500 },
-                { x: new Date(2017, 4), y: 43000 },
-                { x: new Date(2017, 5), y: 47000 },
-                { x: new Date(2017, 6), y: 52000 },
-                { x: new Date(2017, 7), y: 57500 },
-                { x: new Date(2017, 8), y: 59500 },
-                { x: new Date(2017, 9), y: 63000 },
-                { x: new Date(2017, 10), y: 65000 },
-                { x: new Date(2017, 11), y: 69500 }
-            ]
+            dataPoints: []
         },{
             type: "line",
             name: "Expected Expenses",
             showInLegend: true,
             yValueFormatString: "$#,##0",
-            dataPoints: [
-                { x: new Date(2017, 0), y: 38000 },
-                { x: new Date(2017, 1), y: 39000 },
-                { x: new Date(2017, 2), y: 35000 },
-                { x: new Date(2017, 3), y: 37000 },
-                { x: new Date(2017, 4), y: 42000 },
-                { x: new Date(2017, 5), y: 48000 },
-                { x: new Date(2017, 6), y: 51000 },
-                { x: new Date(2017, 7), y: 58000 },
-                { x: new Date(2017, 8), y: 62000 },
-                { x: new Date(2017, 9), y: 65000 },
-                { x: new Date(2017, 10), y: 68000 },
-                { x: new Date(2017, 11), y: 67000 }
-            ]
+            dataPoints: []
         },{
             type: "area",
             name: "Savings",
@@ -139,30 +105,14 @@ const Budget = (props) => {
             markerBorderThickness: 2,
             showInLegend: true,
             yValueFormatString: "$#,##0",
-            dataPoints: [
-                { x: new Date(2017, 0), y: 11500 },
-                { x: new Date(2017, 1), y: 10500 },
-                { x: new Date(2017, 2), y: 9000 },
-                { x: new Date(2017, 3), y: 13500 },
-                { x: new Date(2017, 4), y: 13890 },
-                { x: new Date(2017, 5), y: 18500 },
-                { x: new Date(2017, 6), y: 16000 },
-                { x: new Date(2017, 7), y: 14500 },
-                { x: new Date(2017, 8), y: 15880 },
-                { x: new Date(2017, 9), y: 24000 },
-                { x: new Date(2017, 10), y: 31000 },
-                { x: new Date(2017, 11), y: 19000 }
-            ]
+            dataPoints: []
         }]
     }
-
     const costRatio = {
         animationEnabled: true,
-        title: {
-            text: "Percentage of Income Saved"
-        },
+        title: { text: "Percentage of Income Spent"},
         subtitles: [{
-            text: "24% Spent",
+            text: `%${2} Spent`,
             verticalAlign: "center",
             fontSize: 24,
             dockInsidePlotArea: true
@@ -171,28 +121,43 @@ const Budget = (props) => {
             type: "doughnut",
             showInLegend: true,
             indexLabel: "{name}: {y}",
-            yValueFormatString: "#,###'%'",
-            dataPoints: [
-                { name: "Incomes", y: 76 },
-                { name: "Expenses", y: 24 }
-            ]
+            yValueFormatString: "$#,##0",
+            dataPoints: []
         }]
     }
 
+    function createNewIncome() {
+        const transactionName = document.getElementById('transactionName').value;
+        const transactionAmount = document.getElementById('transactionAmount').value;
+        const transactionTimes = document.getElementById('transactionTimes').value;
+        const transactionType = document.getElementById('transactionType').value;
+        const id = transactionName + transactionTimes;
+        const newTransaction = {
+            name: transactionName,
+            amount: transactionAmount,
+            times: transactionTimes,
+            budgetId: props.budget.budgetId,
+            transactionId: id,
+            type: transactionType
+        }
+        createTransaction(newTransaction);
+    }
+    function deleteTransaction(id) {
+        deleteTransaction(id);
+    }
+    
     return (
         <>
-        {console.log(budget)}
-        {/*budget container */}
             <Tab.Pane eventKey={props.tabKey} className="budget">
                 <Row>
-                    <h1>{budget.name}</h1>
+                    <h1>{props.budget.name}</h1>
                 </Row>
                 <Row>
                     <Col sm={{ span: 6, offset: 0 }} md={{ span: 4, offset: 0 }} lg={{ span: 4, offset: 0 }}>
-                        <p>{budget.description}</p>
+                        <p>{props.budget.description}</p>
                     </Col>
                     <Col sm={{ span: 2, offset: 2 }} md={{ span: 2, offset: 6 }} lg={{ span: 2, offset: 6 }}>
-                        <p>Last Edit: {budget.updatedAt}</p>
+                        <p>Last Edit: {props.budget.updatedAt}</p>
                     </Col>
                 </Row>
                 <Row  className="graph-container">
@@ -227,16 +192,15 @@ const Budget = (props) => {
                     </Col>
                 </Row>
                 <hr></hr>
+                <Row>
+                    <Col sm={{ span: 12, offset: 0 }} md={{ span: 10, offset: 1 }} lg={{ span: 6, offset: 3 }}>
+                        <Button variant="success" onClick={handleShow}>Add Transaction</Button>
+                    </Col>
+                </Row>
                 <Row className="details-container">
                     <Col sm={{ span: 6, offset: 0 }} md={{ span: 6, offset: 0 }} lg={{ span: 6, offset: 0 }}>
                         <div className="income-container">
                             <h1>Incomes:</h1>
-                            <Col sm={{ span: 12, offset: 0 }} md={{ span: 10, offset: 1 }} lg={{ span: 6, offset: 3 }}>
-                                <OverlayTrigger key='left' placement='left' overlay={
-                                    <Tooltip id={`tooltip-left`}>Add Income</Tooltip>}>
-                                        <Button variant="success" onClick={handleShow}>+</Button>
-                                </OverlayTrigger>
-                            </Col>
                             <br></br>
                             <Table striped bordered hover>
                                 <thead>
@@ -248,8 +212,8 @@ const Budget = (props) => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                {budget.income.map((income,index) => {
-                                    return <Income key={index} incomeData={income} index={index}/>
+                                {transactionData.map((income,index) => {
+                                    return <Income key={index} incomeData={income} index={index} handleClick={deleteTransaction} transactionId={income.transactionId}/>
                                 })}
                                 </tbody>
                             </Table>
@@ -258,12 +222,6 @@ const Budget = (props) => {
                     <Col sm={{ span: 6, offset: 0 }} md={{ span: 6, offset: 0 }} lg={{ span: 6, offset: 0 }}>
                         <div className="expenses-container">
                             <h1>Expenses:</h1>
-                            <Col sm={{ span: 12, offset: 0 }} md={{ span: 10, offset: 1 }} lg={{ span: 6, offset: 3 }}>
-                                <OverlayTrigger key='right' placement='right' overlay={
-                                    <Tooltip id={`tooltip-right`}>Add Expense</Tooltip>}>
-                                        <Button variant="danger" onClick={handleShow2}>-</Button>
-                                </OverlayTrigger>
-                            </Col>
                             <br></br>
                             <Table striped bordered hover>
                                 <thead>
@@ -275,7 +233,7 @@ const Budget = (props) => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                {budget.expense.map((expense,index)=> {
+                                {transactionData.map((expense,index)=> {
                                     return <Expense key={index} expenseData={expense} index={index}/>
                                 })}
                                 </tbody>
@@ -286,43 +244,34 @@ const Budget = (props) => {
             </Tab.Pane>
                             
             {/* Modals */}
-            <Modal className="newIncome-modal" show={show} onHide={handleClose}>
+            <Modal className="newTransaction-modal" show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                     Enter Income Information Below
                 </Modal.Header>
-                {/* New Income Form */}
-                <Modal.Footer>
-                    <Row>
-                        <Button variant="secondary" onClick={null}>Create New Income</Button>
-                    </Row>        
-                </Modal.Footer>
-            </Modal>
-
-            <Modal className="newExpense-modal" show={show2} onHide={handleClose2}>
-                <Modal.Header closeButton>
-                    Enter Expense Information Below
-                </Modal.Header>
-                    <Form controlid="expense-form">
+                    <Form controlid="transaction-form">
                         <Form.Group>
                             <Row>
-                                <Col sm={{ span: 12, offset: 0 }} md={{ span: 12, offset: 0 }} lg={{ span: 3, offset: 0 }}>
+                                <Form.Group>
                                     <Form.Label>Name</Form.Label>
-                                    <Form.Control id="expenseName" autoComplete="off" type="text" placeholder="Enter email" />
-                                </Col>
-                                <Col sm={{ span: 12, offset: 0 }} md={{ span: 12, offset: 0 }} lg={{ span: 3, offset: 0 }}>
+                                    <Form.Control id="transactionName" autoComplete="off" type="text" placeholder="Enter email" />
                                     <Form.Label>Amount</Form.Label>
-                                    <Form.Control autoComplete="off" id="expenseAmount" type="text" placeholder="20.00" />
-                                </Col>
-                                <Col sm={{ span: 12, offset: 0 }} md={{ span: 12, offset: 0 }} lg={{ span: 3, offset: 0 }}>
+                                    <Form.Control autoComplete="off" id="transactionAmount" type="text" placeholder="20.00" />
+                                </Form.Group>
+                                <Form.Group>
                                     <Form.Label>Times Per Month</Form.Label>
-                                    <Form.Control id="perMonth" autoComplete="on" type="" placeholder="3" />
-                                </Col>
+                                    <Form.Control id="transactionTimes" autoComplete="off" type="text" placeholder="3" />
+                                    <Form.Label>Type</Form.Label>
+                                    <Form.Control as="select" id="transactionTimes" defaultValue="Choose...">
+                                        <option value="expense">Expense</option>
+                                        <option value="income">Income</option>
+                                    </Form.Control>
+                                </Form.Group>
                             </Row>
                         </Form.Group>
                     </Form>
                 <Modal.Footer>
                     <Row>
-                        <Button variant="secondary" onClick={null}>Create New Expense</Button>
+                        <Button variant="secondary" onClick={() => createNewIncome()}>Create Transaction</Button>
                     </Row>        
                 </Modal.Footer>
             </Modal>
@@ -334,12 +283,23 @@ function mapStateToProps(state) {
     return {
         loggedIn: state.loggedIn,
         user: state.user,
-        budgets: state.budgets,
         activeBudget: state.activeBudget
         }
 }
 function mapDispatchToProps(dispatch) {
     return {
+        updateBudget: (id, data) => { 
+            dispatch(updateBudget(id, data))
+        },
+        setBudget: (budget) => {
+            dispatch(setBudget(budget))
+        },
+        createTransaction: (transactionD) => {
+            dispatch(createTransaction(transactionD))
+        },
+        findTransaction: (transactionD) => {
+            dispatch(findTransaction(transactionD))
+        }
     }
 }
 

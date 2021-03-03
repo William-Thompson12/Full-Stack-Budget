@@ -11,7 +11,6 @@ import { createBudget, updateBudget, deleteBudget } from '../../redux/actions';
 // Components
 import BudgetButton from './budgetButton';
 import NewBudgetForm from './newBudgetForm';
-import BudgetData from '../../services/budgets.services'
 
 const BudgetControls = (props) => {
     const user = props.user
@@ -39,7 +38,8 @@ const BudgetControls = (props) => {
             description: budgetDescription,
             userToken: user.userToken
         }
-        createBudget(newBudget);
+        console.log(newBudget, 'running start')
+        props.createBudget(newBudget);
     }
     function editCurrentBudget() {
         const budgetName = document.getElementById('budget-name').value;
@@ -50,11 +50,12 @@ const BudgetControls = (props) => {
             description: budgetDescription,
             userToken: user.userToken
         }
-        updateBudget(id, newBudget);
+        console.log(id, newBudget)
+        props.updateBudget(id, newBudget);
     }
     function deleteCurrentBudget() {
         const id = props.activeBudget
-        deleteBudget(id);
+        props.deleteBudget(id);
     }
 
     return (
