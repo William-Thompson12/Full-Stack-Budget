@@ -45,7 +45,7 @@ const HomePage = (props) => {
                     <Col sm={{ span: 11, offset: 1 }} md={{ span: 11, offset: 1 }} lg={{ span: 3, offset: 1 }}>
                         <Article />
                     </Col>
-                    <Col sm={12} md={12} lg={4}>
+                    <Col className="main-container" sm={12} md={12} lg={4}>
                         <LoginContainer handleClick={_loginIn}/>
                     </Col>
                 </Row>

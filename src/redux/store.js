@@ -10,7 +10,8 @@ export const defaultState = {
       userToken: " "
     },
     budgets: [],
-    activeBudget: " "
+    activeBudget: " ",
+    transactions: []
 }
 
 const store = createStore(

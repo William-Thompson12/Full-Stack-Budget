@@ -9,6 +9,7 @@ class RenderedBudgets extends React.Component {
     render() {
         return (
             <Nav.Item className="rendered-budgets">
+                {console.log(this.props.budgetId)}
                 <Nav.Link onClick={() => this.props.handleClick(this.props.budgetId)} eventKey={this.props.budgetId}>
                     <Col sm={{ span: 12, offset: 0 }} md={{ span: 12, offset: 0 }} lg={{ span: 12, offset: 0 }}>
                             <Card.Text className="budget-title"><strong>{this.props.budgetName}</strong></Card.Text>

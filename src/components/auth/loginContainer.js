@@ -21,7 +21,7 @@ class LoginContainer extends React.Component{
                 <div className="form-block">
                     <div className="mb-4">
                         <h3>Sign In to <strong>Budget Tool</strong></h3>
-                        <p className="mb-4">Lorem ipsum dolor sit amet elit. Sapiente sit aut eos consectetur adipisicing.</p>
+                        <p className="mb-4">Login or create an account below.</p>
                     </div>
                     <Form controlid="loginForm">
                         <Form.Group>
@@ -44,11 +44,6 @@ class LoginContainer extends React.Component{
                                 </Col>
                             </Row>
                             <Button className="btn-dark" onClick={() => this.props.handleClick()}>Submit</Button>
-                            <span className="d-block text-center my-4 text-muted"> or sign in with</span>
-                            <div className="social-login text-center">'
-                                {/* Add Google Login Through FireBase */}
-                                <Button variant="secondary" onClick={null}><span className="icon-google"></span></Button>
-                            </div>
                         </Form.Group>
                     </Form>
                 </div>

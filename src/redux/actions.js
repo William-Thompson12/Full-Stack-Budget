@@ -7,11 +7,15 @@ export const DELETE_USER = 'DELETE_USER';
 // Budget Action Types
 export const CREATE_BUDGET = 'CREATE_BUDGET';
 export const UPDATE_BUDGET = 'UPDATE_BUDGET';
-export const COPY_BUDGET = 'COPY_BUDGET';
 export const DELETE_BUDGET = 'DELETE_BUDGET';
 export const FIND_BUDGET = 'FIND_BUDGET';
-// Active Budget Types;
+// Active Budget Types
 export const SET_BUDGET = "SET_BUDGET";
+// Transaction Action Types
+export const CREATE_TRANSACTION = 'CREATE_TRANSACTION';
+export const UPDATE_TRANSACTION = 'UPDATE_TRANSACTION';
+export const DELETE_TRANSACTION = 'DELETE_TRANSACTION';
+export const FIND_TRANSACTION = 'FIND_TRANSACTION';
 
 export function findUser(userD) {
     return {
@@ -49,12 +53,13 @@ export function findUser(userD) {
             newBudget
         }
     }
-}export function updateBudget(id, budgetInfo) {
+}export function updateBudget(id, newBudget) {
+    console.log(id, newBudget)
     return {
         type: UPDATE_BUDGET,
         payload: {
             id,
-            budgetInfo
+            newBudget
         }
     }
 }export function deleteBudget() {
@@ -70,6 +75,35 @@ export function findUser(userD) {
         type: SET_BUDGET,
         payload: {
             budget
+        }
+    }
+}export function createTransaction(transactionD) {
+    return {
+        type: CREATE_TRANSACTION,
+        payload: {
+            transactionD
+        }
+    }
+}export function updateTransaction(id, transactionD) {
+    return {
+        type: UPDATE_TRANSACTION,
+        payload: {
+            id,
+            transactionD
+        }
+    }
+}export function deleteTransaction(id) {
+    return {
+        type: DELETE_TRANSACTION,
+        payload: {
+            id
+        }
+    }
+}export function findTransaction(transactionD) {
+    return {
+        type: FIND_TRANSACTION,
+        payload: {
+            transactionD
         }
     }
 }

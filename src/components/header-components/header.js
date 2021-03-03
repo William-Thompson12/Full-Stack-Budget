@@ -36,7 +36,6 @@ class Header extends React.Component{
                     <Navbar.Toggle />
                     <Navbar.Collapse className="justify-content-end">
                     <NavDropdown title="More" id="collasible-nav-dropdown">
-                        <Link to="/about">About</Link>
                         <NavDropdown.Item href="https://github.com/William-Thompson12/Full-Stack-Bugdet">GitHub</NavDropdown.Item>
                         <NavDropdown.Item href="www.linkedin.com/in/william-thompson12">Linkedin</NavDropdown.Item>
                     </NavDropdown>

@@ -11,35 +11,34 @@ import UserData from '../services/users.services';
 import BudgetData from '../services/budgets.services';
 // Actions
 import { findBudgets, findUser, setBudget } from '../redux/actions';
+// Bootstrap
+import Tab from 'react-bootstrap/Tab';
 
 const MainHub = (props) => {
-    const [loading, setLoading] = useState(true)
-    const [budgetData, setBudgetData] = useState([])
+    const [budgetData, setBudgetData] = useState([{name:'', budgetId: '', expense:[], income:[], description: ''}])
+    const [key, setKey] = useState('');
 
     function findBudgetData() {
         BudgetData.getAll(Cookies.get('userToken'))
         .then((response) => {
             props.findBudgets(response.data);
-            props.setBudget(response.data[0].budgetId);
-            console.log(response.data)
-            setTimeout(() => {
-                setBudgetData([...response.data]);
-              }, 3000);
-        });
+            setBudgetData(response.data);
+            setKey(budgetData[0].budgetId);
+        })
     }
     
     function findUserData() {
         UserData.get(Cookies.get('userToken'))
         .then((response) => {
             props.findUser(response.data[0]);
-            setLoading(false)
         })
     }
 
     useEffect(() => {
-        findUserData()
-        findBudgetData()
-    }, [loading]);
+        findUserData();
+        findBudgetData();
+        console.log('rerendering');
+    }, []);
 
     return (
         <>
@@ -47,10 +46,12 @@ const MainHub = (props) => {
             <div className="page">
                 <Header profile={true}/>
                 <div className="main">
-                    <ActionContainer budgets={budgetData} />
+                    <Tab.Container id="action-Container" defaultActiveKey={key}>
+                        <ActionContainer budgets={budgetData} />
+                    </Tab.Container>
                 </div>
+                <Footer/>
             </div>
-            <Footer/>
         </>
     );
 }

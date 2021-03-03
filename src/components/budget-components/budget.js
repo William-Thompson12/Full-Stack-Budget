@@ -1,5 +1,4 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import CanvasJSReact from "../canvasjs-3.2.9/canvasjs.react"
 import { connect } from 'react-redux';
 // CSS
@@ -10,15 +9,14 @@ import Tab from 'react-bootstrap/Tab';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
-import Tooltip from 'react-bootstrap/Tooltip';
-import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Form from 'react-bootstrap/Form';
 import Table from 'react-bootstrap/Table';
 // Components
 import Income from './incomeContainer';
 import Expense from './expenseContainer';
+import TransactionData from '../../services/transactions.services';
 // Actions
-import { updateBudget, setBudget } from '../../redux/actions';
+import { updateBudget, setBudget, createTransaction, findTransaction } from '../../redux/actions';
 import { findAllPos, findAllNeg, monthlyBudgetSaving, costRatioData, percentage} from './budgetCalculations';
 // Charts
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
@@ -29,25 +27,30 @@ const Budget = (props) => {
     const handleShow = () => setShow(true);
     const handleClose = () => setShow(false);
     // end modal
-    // modal2
-    const [show2, setShow2] = useState(false);
-    const handleShow2 = () => setShow2(true);
-    const handleClose2 = () => setShow2(false);
-    // end modal2
+    const [transactionData, setTransactionData] = useState([{name:'', budgetId: '', amount:0, times:0, transactionId:'', type:''}])
 
-    const costRatioCalc = costRatioData(props.budget);
-    const positiveBudgets = findAllPos(props.budget);
-    const negativeBudgets = findAllNeg(props.budget);
-    const monthlyBudget = monthlyBudgetSaving(props.budget);
-    const percentageCalc = percentage(props.budget);
-    console.log( 
-     props.budget,
-     costRatioCalc,
-     positiveBudgets,
-     negativeBudgets,
-     monthlyBudget,
-     percentageCalc
-    )
+    function findTransactionData() { 
+        TransactionData.getAll(props.budget.budgetId)
+        .then((response) => {
+        props.findTransaction(response.data);
+        setTransactionData(response.data);
+        })
+    }
+    
+
+    useEffect(() => {
+        findTransactionData();
+    }, []);
+
+    // const transactions = props.transactions.forEach(transaction => {
+    //     if (transaction.budgetId === props.budget.budgetId) {
+    //         return transaction
+    //     } else {
+    //         return 
+    //     }
+    // });
+
+    console.log(transactionData)
 
     const expenseOptions = {
         animationEnabled: true,
@@ -58,7 +61,7 @@ const Budget = (props) => {
             type: "pie",
             indexLabel: "{label}: {y}$",		
             startAngle: -90,
-            dataPoints: negativeBudgets
+            dataPoints: []
         }]
     }
     const incomeOptions = {
@@ -70,7 +73,7 @@ const Budget = (props) => {
             type: "pie",
             indexLabel: "{label}: {y}$",		
             startAngle: -90,
-            dataPoints: positiveBudgets
+            dataPoints: []
         }]
     }
     const projectedIncome = {
@@ -88,13 +91,13 @@ const Budget = (props) => {
             showInLegend: true,
             xValueFormatString: "MMMM YYYY",
             yValueFormatString: "$#,##0",
-            dataPoints: monthlyBudget.income
+            dataPoints: []
         },{
             type: "line",
             name: "Expected Expenses",
             showInLegend: true,
             yValueFormatString: "$#,##0",
-            dataPoints: monthlyBudgetSaving.expense
+            dataPoints: []
         },{
             type: "area",
             name: "Savings",
@@ -102,14 +105,14 @@ const Budget = (props) => {
             markerBorderThickness: 2,
             showInLegend: true,
             yValueFormatString: "$#,##0",
-            dataPoints: monthlyBudgetSaving.savings
+            dataPoints: []
         }]
     }
     const costRatio = {
         animationEnabled: true,
         title: { text: "Percentage of Income Spent"},
         subtitles: [{
-            text: `%${percentageCalc} Spent`,
+            text: `%${2} Spent`,
             verticalAlign: "center",
             fontSize: 24,
             dockInsidePlotArea: true
@@ -119,44 +122,30 @@ const Budget = (props) => {
             showInLegend: true,
             indexLabel: "{name}: {y}",
             yValueFormatString: "$#,##0",
-            dataPoints: costRatioCalc
+            dataPoints: []
         }]
     }
 
-    // function createNewIncome() {
-    //     const updatedBudget = [...props.budget.income]
-    //     const incomeName = document.getElementById('incomeName').value;
-    //     const incomeAmount = document.getElementById('incomeAincomeAmount').value;
-    //     const incomeTimes = document.getElementById('incomeTimes').value;
-    //     const id = props.activeBudget
-    //     const newIncome = {
-    //         name: incomeName,
-    //         amount: incomeAmount,
-    //         times: incomeTimes
-    //     }
-    //     updatedBudget.income = [newIncome]
-    //     updateBudget(id, updatedBudget);
-    // }
-    // function createNewExpense() {
-    //     const updatedBudget = [...props.budget.expense]
-    //     const expenseName = document.getElementById('expenseName').value;
-    //     const expenseAmount = document.getElementById('expenseAincomeAmount').value;
-    //     const expenseTimes = document.getElementById('expenseTimes').value;
-    //     const id = props.activeBudget
-    //     const newExpense = {
-    //         id: 
-    //         name: expenseName,
-    //         amount: expenseAmount,
-    //         times: expenseTimes
-    //     }
-    //     updatedBudget.expense = [newExpense]
-    //     updateBudget(id, updatedBudget);
-    // }
-    // function deleteCurrentBudget() {
-    //     const id = props.activeBudget
-    //     deleteBudget(id);
-    // }
-
+    function createNewIncome() {
+        const transactionName = document.getElementById('transactionName').value;
+        const transactionAmount = document.getElementById('transactionAmount').value;
+        const transactionTimes = document.getElementById('transactionTimes').value;
+        const transactionType = document.getElementById('transactionType').value;
+        const id = transactionName + transactionTimes;
+        const newTransaction = {
+            name: transactionName,
+            amount: transactionAmount,
+            times: transactionTimes,
+            budgetId: props.budget.budgetId,
+            transactionId: id,
+            type: transactionType
+        }
+        createTransaction(newTransaction);
+    }
+    function deleteTransaction(id) {
+        deleteTransaction(id);
+    }
+    
     return (
         <>
             <Tab.Pane eventKey={props.tabKey} className="budget">
@@ -203,16 +192,15 @@ const Budget = (props) => {
                     </Col>
                 </Row>
                 <hr></hr>
+                <Row>
+                    <Col sm={{ span: 12, offset: 0 }} md={{ span: 10, offset: 1 }} lg={{ span: 6, offset: 3 }}>
+                        <Button variant="success" onClick={handleShow}>Add Transaction</Button>
+                    </Col>
+                </Row>
                 <Row className="details-container">
                     <Col sm={{ span: 6, offset: 0 }} md={{ span: 6, offset: 0 }} lg={{ span: 6, offset: 0 }}>
                         <div className="income-container">
                             <h1>Incomes:</h1>
-                            <Col sm={{ span: 12, offset: 0 }} md={{ span: 10, offset: 1 }} lg={{ span: 6, offset: 3 }}>
-                                <OverlayTrigger key='left' placement='left' overlay={
-                                    <Tooltip id={`tooltip-left`}>Add Income</Tooltip>}>
-                                        <Button variant="success" onClick={handleShow}>+</Button>
-                                </OverlayTrigger>
-                            </Col>
                             <br></br>
                             <Table striped bordered hover>
                                 <thead>
@@ -224,8 +212,8 @@ const Budget = (props) => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                {props.budget.income.map((income,index) => {
-                                    return <Income key={index} incomeData={income} index={index}/>
+                                {transactionData.map((income,index) => {
+                                    return <Income key={index} incomeData={income} index={index} handleClick={deleteTransaction} transactionId={income.transactionId}/>
                                 })}
                                 </tbody>
                             </Table>
@@ -234,12 +222,6 @@ const Budget = (props) => {
                     <Col sm={{ span: 6, offset: 0 }} md={{ span: 6, offset: 0 }} lg={{ span: 6, offset: 0 }}>
                         <div className="expenses-container">
                             <h1>Expenses:</h1>
-                            <Col sm={{ span: 12, offset: 0 }} md={{ span: 10, offset: 1 }} lg={{ span: 6, offset: 3 }}>
-                                <OverlayTrigger key='right' placement='right' overlay={
-                                    <Tooltip id={`tooltip-right`}>Add Expense</Tooltip>}>
-                                        <Button variant="danger" onClick={handleShow2}>-</Button>
-                                </OverlayTrigger>
-                            </Col>
                             <br></br>
                             <Table striped bordered hover>
                                 <thead>
@@ -251,7 +233,7 @@ const Budget = (props) => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                {props.budget.expense.map((expense,index)=> {
+                                {transactionData.map((expense,index)=> {
                                     return <Expense key={index} expenseData={expense} index={index}/>
                                 })}
                                 </tbody>
@@ -262,60 +244,34 @@ const Budget = (props) => {
             </Tab.Pane>
                             
             {/* Modals */}
-            <Modal className="newIncome-modal" show={show} onHide={handleClose}>
+            <Modal className="newTransaction-modal" show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                     Enter Income Information Below
                 </Modal.Header>
-                    <Form controlid="income-form">
+                    <Form controlid="transaction-form">
                         <Form.Group>
                             <Row>
-                                <Col sm={{ span: 12, offset: 0 }} md={{ span: 12, offset: 0 }} lg={{ span: 3, offset: 0 }}>
+                                <Form.Group>
                                     <Form.Label>Name</Form.Label>
-                                    <Form.Control id="incomeName" autoComplete="off" type="text" placeholder="Enter email" />
-                                </Col>
-                                <Col sm={{ span: 12, offset: 0 }} md={{ span: 12, offset: 0 }} lg={{ span: 3, offset: 0 }}>
+                                    <Form.Control id="transactionName" autoComplete="off" type="text" placeholder="Enter email" />
                                     <Form.Label>Amount</Form.Label>
-                                    <Form.Control autoComplete="off" id="incomeAmount" type="text" placeholder="20.00" />
-                                </Col>
-                                <Col sm={{ span: 12, offset: 0 }} md={{ span: 12, offset: 0 }} lg={{ span: 3, offset: 0 }}>
+                                    <Form.Control autoComplete="off" id="transactionAmount" type="text" placeholder="20.00" />
+                                </Form.Group>
+                                <Form.Group>
                                     <Form.Label>Times Per Month</Form.Label>
-                                    <Form.Control id="perMonth" autoComplete="on" type="" placeholder="3" />
-                                </Col>
+                                    <Form.Control id="transactionTimes" autoComplete="off" type="text" placeholder="3" />
+                                    <Form.Label>Type</Form.Label>
+                                    <Form.Control as="select" id="transactionTimes" defaultValue="Choose...">
+                                        <option value="expense">Expense</option>
+                                        <option value="income">Income</option>
+                                    </Form.Control>
+                                </Form.Group>
                             </Row>
                         </Form.Group>
                     </Form>
                 <Modal.Footer>
                     <Row>
-                        <Button variant="secondary" onClick={null}>Create New Income</Button>
-                    </Row>        
-                </Modal.Footer>
-            </Modal>
-
-            <Modal className="newExpense-modal" show={show2} onHide={handleClose2}>
-                <Modal.Header closeButton>
-                    Enter Expense Information Below
-                </Modal.Header>
-                    <Form controlid="expense-form">
-                        <Form.Group>
-                            <Row>
-                                <Col sm={{ span: 12, offset: 0 }} md={{ span: 12, offset: 0 }} lg={{ span: 3, offset: 0 }}>
-                                    <Form.Label>Name</Form.Label>
-                                    <Form.Control id="expenseName" autoComplete="off" type="text" placeholder="Enter email" />
-                                </Col>
-                                <Col sm={{ span: 12, offset: 0 }} md={{ span: 12, offset: 0 }} lg={{ span: 3, offset: 0 }}>
-                                    <Form.Label>Amount</Form.Label>
-                                    <Form.Control autoComplete="off" id="expenseAmount" type="text" placeholder="20.00" />
-                                </Col>
-                                <Col sm={{ span: 12, offset: 0 }} md={{ span: 12, offset: 0 }} lg={{ span: 3, offset: 0 }}>
-                                    <Form.Label>Times Per Month</Form.Label>
-                                    <Form.Control id="perMonth" autoComplete="on" type="" placeholder="3" />
-                                </Col>
-                            </Row>
-                        </Form.Group>
-                    </Form>
-                <Modal.Footer>
-                    <Row>
-                        <Button variant="secondary" onClick={null}>Create New Expense</Button>
+                        <Button variant="secondary" onClick={() => createNewIncome()}>Create Transaction</Button>
                     </Row>        
                 </Modal.Footer>
             </Modal>
@@ -337,6 +293,12 @@ function mapDispatchToProps(dispatch) {
         },
         setBudget: (budget) => {
             dispatch(setBudget(budget))
+        },
+        createTransaction: (transactionD) => {
+            dispatch(createTransaction(transactionD))
+        },
+        findTransaction: (transactionD) => {
+            dispatch(findTransaction(transactionD))
         }
     }
 }

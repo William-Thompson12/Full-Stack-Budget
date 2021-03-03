@@ -8,7 +8,7 @@ class BudgetData {
     return http.post("/budgets", data);
   }
   update(id, data) {
-    return http.put(`/budgets/:id`, data);
+    return http.put(`/budgets/${id}`, data);
   }
   delete(data) {
     return http.delete(`/budgets`, data);

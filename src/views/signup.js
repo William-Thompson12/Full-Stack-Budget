@@ -9,8 +9,6 @@ import Header from '../components/header-components/header';
 import Footer from '../components/footer-components/footer';
 import SignupContainer from '../components/auth/signupContainer';
 import UserData from '../services/users.services';
-// Actions
-import { logIn } from '../redux/actions';
 // Bootstrap 
 import Col from 'react-bootstrap/Col';
 
@@ -62,8 +60,6 @@ function mapStateToProps(state) {
 }
 function mapDispatchToProps(dispatch) {
     return {
-        // Translate redux dispatch into props
-        logInClick: () => { dispatch(logIn()) }
     }
 }
 
