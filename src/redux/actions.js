@@ -100,6 +100,7 @@ export function findUser(userD) {
         }
     }
 }export function findTransaction(transactionD) {
+    console.log(transactionD, 'action')
     return {
         type: FIND_TRANSACTION,
         payload: {

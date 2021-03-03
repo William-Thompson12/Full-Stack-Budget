@@ -112,8 +112,9 @@ export function transactionsReducer(state=[], action) {
             return updatedState;
         }
         case CREATE_TRANSACTION: {
-            const newTransaction = action.payload.newTransaction;
+            const newTransaction = action.payload.transactionD;
             TransactionData.create(newTransaction);
+            console.log(newTransaction, TransactionData.create)
             return [...state, newTransaction];
         }
         default: 

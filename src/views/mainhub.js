@@ -5,7 +5,6 @@ import Cookies from 'js-cookie';
 import '../views/mainhub.css';
 // Components
 import Header from '../components/header-components/header';
-import Footer from '../components/footer-components/footer';
 import ActionContainer from '../components/budget-components/actionContainer';
 import UserData from '../services/users.services';
 import BudgetData from '../services/budgets.services';
@@ -37,7 +36,6 @@ const MainHub = (props) => {
     useEffect(() => {
         findUserData();
         findBudgetData();
-        console.log('rerendering');
     }, []);
 
     return (
@@ -50,7 +48,6 @@ const MainHub = (props) => {
                         <ActionContainer budgets={budgetData} />
                     </Tab.Container>
                 </div>
-                <Footer/>
             </div>
         </>
     );
