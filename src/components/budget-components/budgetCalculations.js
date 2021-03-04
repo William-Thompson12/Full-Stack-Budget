@@ -1,6 +1,6 @@
 export function findBoth(transaction) {
-    const income = totalNeg(transaction)
-    const expense = totalPos(transaction)
+    const expense = totalNeg(transaction)
+    const income = totalPos(transaction)
     let data = {
         income,
         expense
@@ -12,14 +12,15 @@ export function costRatioData(transaction) {
     const both = findBoth(transaction)
     const newCostRatio = [
         {name: "Incomes", y: both.income}, 
-        {name: "Expenses", y: both.expense}
+        {name: "Expenses", y: -Math.abs(both.expense)}
     ]
     return newCostRatio;
 }
 export function percentage(transaction) {
     const num = totalPos(transaction);
     const negNum = totalNeg(transaction);
-  return (negNum/num)*100;
+    console.log((negNum/num)*100)
+  return Math.round((negNum/num)*100);
 }
 export function totalPos(transaction) {
     let totalPosStart = 0
@@ -59,6 +60,7 @@ export function monthlyBudgetSaving(transaction) {
         income: []
     };
     for(let i = 0; i < 12; i++) {
+        console.log(both)
         monthlyBudget.savings.push(
             {
                 x: new Date(2021, i), 

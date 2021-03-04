@@ -22,6 +22,7 @@ import { findAllPos, findAllNeg, monthlyBudgetSaving, costRatioData, percentage}
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 const Budget = (props) => {
+    console.log(props.budget)
     // modal
     const [show, setShow] = useState(false);
     const handleShow = () => setShow(true);
@@ -93,7 +94,7 @@ const Budget = (props) => {
         animationEnabled: true,
         title: { text: "Percentage of Income Spent"},
         subtitles: [{
-            text: `%${2} Spent`,
+            text: `%$ Spent`,
             verticalAlign: "center",
             fontSize: 24,
             dockInsidePlotArea: true
@@ -108,6 +109,7 @@ const Budget = (props) => {
     })
 
     function findTransactionData() {
+        console.log(props.budget.budgetId, TransactionData)
         TransactionData.getAll(props.budget.budgetId)
         .then((response) => {
             props.findTransaction(response.data);
@@ -149,20 +151,30 @@ const Budget = (props) => {
     const chartData = {}
 
     function budgetFunctions() {
-        chartData.incomeBreakDown = findAllPos(transactionData)
-        chartData.expenseBreakDown = findAllNeg(transactionData)
-        chartData.projectMonthly = monthlyBudgetSaving(transactionData)
-        chartData.costRatioData = costRatioData(transactionData)
-        console.log(chartData)
         let newProjectedIncome = projectedIncome
         let newExpense = expenseOptions
         let newIncome = incomeOptions
-        let costRatio = costRatio
-        newProjectedIncome.data[0].dataPoints = chartData.projectMonthly.savings
+        let newCostRatioData = costRatio
+
+        chartData.incomeBreakDown = findAllPos(transactionData);
+        chartData.expenseBreakDown = findAllNeg(transactionData);
+        chartData.projectMonthly = monthlyBudgetSaving(transactionData);
+        chartData.costRatioData = costRatioData(transactionData);
+        chartData.percentageNumber = percentage(transactionData);
+
+        newProjectedIncome.data[0].dataPoints = chartData.projectMonthly.income
         newProjectedIncome.data[1].dataPoints = chartData.projectMonthly.expense
-        newProjectedIncome.data[2].dataPoints = chartData.projectMonthly.income
+        newProjectedIncome.data[2].dataPoints = chartData.projectMonthly.savings
+        newExpense.data[0].dataPoints = chartData.expenseBreakDown
+        newIncome.data[0].dataPoints = chartData.incomeBreakDown
+        newCostRatioData.data[0].dataPoints = chartData.costRatioData
+        newCostRatioData.subtitles[0].text = `%${chartData.percentageNumber} Spent`
+        console.log(newIncome, newExpense, newCostRatioData)
+        
         setProjectedIncome(newProjectedIncome);
-        console.log(chartData);
+        setIncomeOptions(newIncome);
+        setExpenseOptions(newExpense);
+        setCostRatio(newCostRatioData);
     }
 
     console.log(transactionData);
