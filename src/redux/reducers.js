@@ -83,7 +83,6 @@ export function transactionsReducer(state=[], action) {
     switch(action.type) {
         case FIND_TRANSACTION: {
             const transactionD = action.payload.transactionD;
-            console.log(transactionD);
             return [...transactionD];
         }
         case UPDATE_TRANSACTION: {
@@ -114,7 +113,6 @@ export function transactionsReducer(state=[], action) {
         case CREATE_TRANSACTION: {
             const newTransaction = action.payload.transactionD;
             TransactionData.create(newTransaction);
-            console.log(newTransaction, TransactionData.create)
             return [...state, newTransaction];
         }
         default: 

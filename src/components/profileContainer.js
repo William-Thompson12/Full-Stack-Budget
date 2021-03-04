@@ -29,7 +29,6 @@ const Profile = (props) => {
         props.updateUser(user.userToken, newUser);
     }
     function signOut() {
-        console.log('signOut')
         history.push("/mainHub");
     }
     function deleteUser() {

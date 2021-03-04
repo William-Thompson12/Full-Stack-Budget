@@ -109,7 +109,6 @@ const Budget = (props) => {
     })
 
     function findTransactionData() {
-        console.log(props.budget.budgetId, TransactionData)
         TransactionData.getAll(props.budget.budgetId)
         .then((response) => {
             props.findTransaction(response.data);
@@ -169,15 +168,12 @@ const Budget = (props) => {
         newIncome.data[0].dataPoints = chartData.incomeBreakDown
         newCostRatioData.data[0].dataPoints = chartData.costRatioData
         newCostRatioData.subtitles[0].text = `%${chartData.percentageNumber} Spent`
-        console.log(newIncome, newExpense, newCostRatioData)
         
         setProjectedIncome(newProjectedIncome);
         setIncomeOptions(newIncome);
         setExpenseOptions(newExpense);
         setCostRatio(newCostRatioData);
     }
-
-    console.log(transactionData);
     
     return (
         <>

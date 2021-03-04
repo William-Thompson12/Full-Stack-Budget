@@ -54,7 +54,6 @@ export function findUser(userD) {
         }
     }
 }export function updateBudget(id, newBudget) {
-    console.log(id, newBudget)
     return {
         type: UPDATE_BUDGET,
         payload: {

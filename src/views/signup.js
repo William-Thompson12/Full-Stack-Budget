@@ -15,7 +15,6 @@ import Col from 'react-bootstrap/Col';
 const SignUp = (props) => {
     const history = useHistory()
     function _signUp(){
-        console.log( document.getElementById('email').value, document.getElementById('first-name').value + document.getElementById('last-name').value)
         // Get Values
         const newUser = {
             email: document.getElementById('email').value,

@@ -19,7 +19,6 @@ export function costRatioData(transaction) {
 export function percentage(transaction) {
     const num = totalPos(transaction);
     const negNum = totalNeg(transaction);
-    console.log((negNum/num)*100)
   return Math.round((negNum/num)*100);
 }
 export function totalPos(transaction) {
@@ -34,7 +33,6 @@ export function totalNeg(transaction) {
     let totalNegStart = 0
     const negTotal = findAllNeg(transaction)
     negTotal.forEach(element => {
-        console.log('element', element)
         totalNegStart += element.y 
     })
     return totalNegStart
@@ -49,7 +47,6 @@ export function findAllNeg(transaction) {
     const negBudgets = transaction.filter(t => t.type === "expense").map((dataPoint) => {
         return {y:(dataPoint.amount * dataPoint.times), label: dataPoint.name};
     })
-    console.log(negBudgets);
     return negBudgets
 }
 export function monthlyBudgetSaving(transaction) {
@@ -60,7 +57,6 @@ export function monthlyBudgetSaving(transaction) {
         income: []
     };
     for(let i = 0; i < 12; i++) {
-        console.log(both)
         monthlyBudget.savings.push(
             {
                 x: new Date(2021, i), 
