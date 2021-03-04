@@ -4,20 +4,65 @@
 ## Status: In Progress
 https://budget-tool-dc.netlify.app
 
-**Welcome to ___ your personal budgeting tool**
-
-**Contact Me**
-  Linkedin: 
-  Email:
+**Welcome to Budget Tool your personal budgeting tool**
 
 **Making the Project:**
 
+1. The Component Lifecycle:
+By far the most important concept on this list is understanding the component lifecycle. The lifecycle methods allow us to run code at specific points in the component’s life or in response to changes in the component’s life.
+2. React Context
+This brings us now to React context which is just global state for components. React context allows you to create global context objects that can be given to any component you make. 
+
 **Repository Contents**
 
-**Features & How they work:**
-  Profile Functions:
-  
-  Budget Functions:
+Img - Images
+
+Redux: 
+actions.js - Calls state functions
+reducers.js - Controls state
+store.js - initial state
+
+Services: - Controlls HTTP calls to the server/ One for each table
+budgets.services.js 
+transactions.services.js
+users.services.js
+
+Views: - Pages
+home.css
+home.js - Home/Index
+mainhub.css
+mainhub.js - Login Redirect
+signup.css
+signup.js - Signup Page
+
+
+Components:
+auth - Contains Login and Sign up Form 
+budget-components - Holds an Action container containg all of the budget functions and components
+canvasjs-3.2.9 - JS Charts
+footer-components - Footer
+header-components - Header
+articleContainer.js - Homepage Visuals 
+profileContainer.js - Profile functions and container
+
+**Features**
+
+  "CanvasJSChart"
+  "axios": "^0.21.1"
+  "dotenv": "^8.2.0"
+  "express": "^4.17.1"
+  "firebase": "^8.2.7"
+  "js-cookie": "^2.2.1"
+  "pg": "^8.5.1"
+  "react": "^17.0.1"
+  "react-beautiful-dnd": "^13.0.0"
+  "react-bootstrap": "^1.4.3"
+  "react-dom": "^17.0.1"
+  "react-redux": "^7.2.2"
+  "react-router": "^5.2.0"
+  "react-router-dom": "^5.2.0"
+  "redux": "^4.0.5"
+  "redux-thunk": "^2.3.0"
 
 # Getting Started with Create React App
 
