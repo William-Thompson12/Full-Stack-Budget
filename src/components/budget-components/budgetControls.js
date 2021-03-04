@@ -60,7 +60,7 @@ const BudgetControls = (props) => {
 
     return (
         <>
-            <Col className="budget-controls" sm={{ span: 10, offset: 1 }} md={{ span: 8, offset: 2 }} lg={{ span: 8, offset: 2 }}>
+            <Col className="budget-controls" sm={{ span: 12, offset: 0 }} md={{ span: 10, offset: 1 }} lg={{ span: 10, offset: 1 }}>
                 {/* Change to Button Functions and Names (Edit Button)*/}
                 <BudgetButton handleClick={handleShow} buttonName={'Create Budget'}/>
                 <BudgetButton handleClick={handleShow2} buttonName={'Edit Budget'}/>

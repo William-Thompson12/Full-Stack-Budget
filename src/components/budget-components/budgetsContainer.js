@@ -37,6 +37,7 @@ const BudgetsContainer = (props) => {
     return (
         <>
         <Nav variant="pills" className="budgets-container">
+            <h4>Budgets:</h4>
             {budgets.length === 0 ? defaultRender() : budgets.map((budget, index) => { return( <RenderedBudgets key={budget.name + index} handleClick={props.setBudget} budgetName={budget.name} budgetId={budget.budgetId} budgetDate={budget.updatedAt} budgetDescription={budget.description}/>)})}
         </Nav>
         {/* Modal */}

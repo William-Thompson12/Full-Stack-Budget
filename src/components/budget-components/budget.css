@@ -24,6 +24,7 @@
 }
 .budget {
     padding: 5%;
+    max-height: 70vh;
 }
 .budget-income {
     border-bottom: 1px solid lightgreen;
