@@ -1,7 +1,7 @@
 # Budget Tool
 ## Full Stack Project - Digitial Crafts - <a href="https://github.com/DigitalCraftsStudents/hyb-fl-08-2020-cohort/blob/main/lectures/week-21/README.md">Requirements</a>
 ## <a href="https://github.com/William-Thompson12/Full-Stack-API">API</a>
-## Status: In Progress
+## Status: Server Down
 https://budget-tool-dc.netlify.app
 
 **Welcome to Budget Tool your personal budgeting tool**
